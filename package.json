@@ -9,10 +9,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
+  "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "html-validate": "^11.8.0",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.1"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
