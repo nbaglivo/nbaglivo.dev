@@ -1,0 +1,10 @@
+@font-face {
+  font-family: GeneralSanz;
+  src: url('./fonts/general-sans/GeneralSans-Regular.woff2')
+}
+
+body {
+  font-family: GeneralSanz;
+  background-color: oklch(97.1% 0.002 248);  
+  margin: 10% 30%;
+}
