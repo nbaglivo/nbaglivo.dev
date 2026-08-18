@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./prose.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	/* Brand - static */
+	--color-accent: oklch(65% 0.27 295);
+	--color-accent-soft: oklch(0.627 0.265 303.9);
+
+	/* Semantic tokens - light mode defaults */
+	--color-background: oklch(97.1% 0.002 248);
+	--color-surface: oklch(96% 0.01 248);
+	--color-foreground: oklch(14.5% 0.025 264);
+	--color-primary: oklch(14.5% 0.025 264);
+	--color-muted: oklch(55% 0.01 264);
+	--color-muted-foreground: oklch(55% 0.01 264);
+	--color-border: oklch(88% 0.008 264);
+	--color-ring: var(--color-accent);
+
+	/* Aliases for SVG/inline use (logo, etc.) */
+	--color-text-primary: var(--color-foreground);
+	--color-text-accent: var(--color-accent);
+}
+
+:root {
+	color-scheme: light dark;
+}
+
+.dark {
+	--color-background: oklch(14.5% 0.008 275);
+	--color-surface: oklch(9% 0.006 275);
+	--color-foreground: oklch(98.5% 0.001 0);
+	--color-primary: oklch(98.5% 0.001 0);
+	--color-muted: oklch(50% 0.01 264);
+	--color-muted-foreground: oklch(70% 0.01 264);
+	--color-border: oklch(35% 0.01 264);
+	--color-ring: var(--color-accent);
+}
+
+@layer base {
+	html {
+		@apply min-h-screen bg-background text-foreground;
+	}
+
+	html.dark {
+		background:
+			radial-gradient(
+				70% 50% at 50% 15%,
+				rgba(255, 255, 255, 0.035),
+				transparent 60%
+			),
+			radial-gradient(100% 80% at 50% 100%, rgba(0, 0, 0, 0.4), transparent 70%),
+			var(--color-background);
+	}
+
+	body {
+		@apply antialiased;
+	}
+
+	/* Keyboard (focus-visible) indicators — accent; components using ring + outline-none keep ring */
+	a:focus-visible,
+	button:focus-visible,
+	input:focus-visible,
+	textarea:focus-visible,
+	select:focus-visible,
+	summary:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+}
+
+/* Respect reduced motion preferences globally */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
