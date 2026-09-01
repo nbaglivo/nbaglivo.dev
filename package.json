@@ -7,9 +7,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && mkdir -p dist && tailwindcss -i style.css -o dist/style.css --minify && cp index.html dist/index.html && cp -r writing dist/writing && cp -r public dist/public"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "html-validate": "^11.8.0",
     "tailwindcss": "^4.3.3",

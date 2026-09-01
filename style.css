@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: GeneralSanz;
-  src: url('/fonts/general-sans/GeneralSans-Regular.woff2')
+  src: url('public/fonts/general-sans/GeneralSans-Regular.woff2')
 }
 
 body {
