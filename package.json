@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && mkdir -p dist && tailwindcss -i style.css -o dist/style.css --minify && cp index.html dist/index.html && cp -r writing dist/writing && cp -r public dist/public"
+    "build": "rm -rf dist && mkdir -p dist && tailwindcss -i style.css -o dist/style.css --minify && cp index.html dist/index.html && cp -r writing dist/writing && cp -r public dist/public",
+    "deploy": "npx wrangler pages deploy dist --project-name=nbaglivo-dev"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
