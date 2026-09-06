@@ -1,9 +1,10 @@
-export function renderPage({ title, subtitle, date, content }) {
+export function renderPage({ title, subtitle, date, content, pageTitle }) {
   const subtitleHtml = subtitle ? `<p class="text-zinc-400 mt-1">${subtitle}</p>\n\t\t\t\t` : ''
+  const resolvedPageTitle = pageTitle ?? title
 
   return `<html lang="en">
 	<head>
-		<title>${title} — Nicolás Baglivo</title>
+		<title>${resolvedPageTitle} — Nicolás Baglivo</title>
 		<link rel="stylesheet" href="../style.css">
 		<meta charset="UTF-8">
 	</head>

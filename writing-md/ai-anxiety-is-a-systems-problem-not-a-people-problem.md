@@ -2,6 +2,7 @@
 title: "AI anxiety is a systems problem, not a people problem"
 subtitle: "The role that turns it into organizational capability"
 date: "Apr 10, 2026"
+pageTitle: "AI anxiety is a systems problem"
 ---
 
 A colleague told me recently he was experiencing what he called AI job anxiety.

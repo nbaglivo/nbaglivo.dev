@@ -1,6 +1,7 @@
 ---
 title: "Why Product Engineers are the most valuable asset for leaders in the AI era"
 date: "Oct 8, 2024"
+pageTitle: "Why Product Engineers are the most valuable asset"
 ---
 
 There are many types of software engineers, but those with a product mindset, who understand outcomes and value, are by far the most valuable to your organization.
