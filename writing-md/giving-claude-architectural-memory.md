@@ -4,7 +4,7 @@ subtitle: "The why, not just the what"
 date: "Apr 13, 2026"
 ---
 
-In the [previous post](context-is-a-choice.md) I described a system for feeding Claude curated context - tagged markdown files loaded via `--system-prompt-file`. That works well for personal context: how I write, what I'm applying for, what I care about in a given session. But there's another application I find even more useful: giving Claude deep, accurate knowledge of a specific codebase or service, without ever pointing it at source code.
+In the [previous post](context-is-a-choice.html) I described a system for feeding Claude curated context - tagged markdown files loaded via `--system-prompt-file`. That works well for personal context: how I write, what I'm applying for, what I care about in a given session. But there's another application I find even more useful: giving Claude deep, accurate knowledge of a specific codebase or service, without ever pointing it at source code.
 
 The context source here is ADRs - Architecture Decision Records. I'll use [ctx](https://ctx.nbaglivo.dev) to load them throughout this post, but that's just convenience. Any method works. How you get the ADRs in front of Claude is up to you.
 
