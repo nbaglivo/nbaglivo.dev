@@ -13,8 +13,11 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
+    "gray-matter": "^4.0.3",
     "html-validate": "^11.8.0",
+    "markdown-it": "^15.0.1",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.1"
   },
