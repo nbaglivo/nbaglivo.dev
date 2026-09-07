@@ -7,16 +7,18 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && mkdir -p dist && tailwindcss -i style.css -o dist/style.css --minify && cp index.html dist/index.html && cp -r writing dist/writing && cp -r public dist/public",
+    "test": "node --test build/*.test.mjs",
+    "build": "node build/build.mjs",
+    "dev": "node --watch-path=index.html --watch-path=style.css --watch-path=writing-md --watch-path=public build/build.mjs & npx wrangler pages dev dist --live-reload",
     "deploy": "npx wrangler pages deploy dist --project-name=nbaglivo-dev"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "gray-matter": "^4.0.3",
     "html-validate": "^11.8.0",
-    "tailwindcss": "^4.3.3",
-    "vite": "^8.2.1"
+    "markdown-it": "^15.0.1",
+    "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
     "fsevents@2.3.3": true
