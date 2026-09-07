@@ -35,7 +35,7 @@ test('renderWritingPages omits the subtitle paragraph for a post with no subtitl
   renderWritingPages(sourceDir, outDir)
 
   const html = readFileSync(join(outDir, 'no-subtitle.html'), 'utf-8')
-  assert.doesNotMatch(html, /text-zinc-400 mt-1/)
+  assert.doesNotMatch(html, /text-\[#6f6a60\] mt-1/)
 })
 
 test('renderWritingPages uses pageTitle frontmatter for the <title> tag while keeping the full title in the <h2>', () => {
@@ -53,7 +53,7 @@ test('renderWritingPages uses pageTitle frontmatter for the <title> tag while ke
   assert.match(html, /<title>A Short Title — Nicolás Baglivo<\/title>/)
   assert.match(
     html,
-    /<h2 class="text-2xl font-medium tracking-tight text-zinc-200">A Very Long Full Title That Would Otherwise Blow The Length Limit<\/h2>/
+    /<h2 class="text-2xl font-medium tracking-tight text-\[#38352f\]">A Very Long Full Title That Would Otherwise Blow The Length Limit<\/h2>/
   )
 })
 
