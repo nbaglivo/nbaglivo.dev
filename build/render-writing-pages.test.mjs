@@ -38,6 +38,36 @@ test('renderWritingPages omits the subtitle paragraph for a post with no subtitl
   assert.doesNotMatch(html, /text-\[#6f6a60\] mt-1/)
 })
 
+test('renderWritingPages uses the subtitle frontmatter as the meta description', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+
+  writeFileSync(
+    join(sourceDir, 'my-post.md'),
+    '---\ntitle: "My Post"\nsubtitle: "A subtitle"\ndate: "Jan 1, 2026"\n---\n\nHello.\n'
+  )
+
+  renderWritingPages(sourceDir, outDir)
+
+  const html = readFileSync(join(outDir, 'my-post.html'), 'utf-8')
+  assert.match(html, /<meta name="description" content="A subtitle">/)
+})
+
+test('renderWritingPages falls back to a title-based meta description for a post with no subtitle frontmatter', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+
+  writeFileSync(
+    join(sourceDir, 'no-subtitle.md'),
+    '---\ntitle: "No Subtitle"\ndate: "Jan 1, 2026"\n---\n\nBody text.\n'
+  )
+
+  renderWritingPages(sourceDir, outDir)
+
+  const html = readFileSync(join(outDir, 'no-subtitle.html'), 'utf-8')
+  assert.match(html, /<meta name="description" content="No Subtitle — notes by Nicolás Baglivo\.">/)
+})
+
 test('renderWritingPages uses pageTitle frontmatter for the <title> tag while keeping the full title in the <h2>', () => {
   const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
   const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
