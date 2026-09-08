@@ -38,6 +38,7 @@ export function renderWritingPages(sourceDir, outDir) {
       date: data.date,
       content: md.render(content),
       pageTitle: data.pageTitle,
+      description: data.subtitle,
     })
 
     const slug = basename(file, '.md')
