@@ -2,7 +2,8 @@ export function renderPage({ title, subtitle, date, content, pageTitle }) {
   const subtitleHtml = subtitle ? `<p class="text-[#6f6a60] mt-1">${subtitle}</p>\n\t\t\t\t` : ''
   const resolvedPageTitle = pageTitle ?? title
 
-  return `<html lang="en">
+  return `<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<title>${resolvedPageTitle} — Nicolás Baglivo</title>
 		<link rel="stylesheet" href="../style.css">
