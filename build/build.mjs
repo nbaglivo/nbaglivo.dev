@@ -4,6 +4,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { copyStaticFiles } from './copy-static.mjs'
 import { renderWritingPages } from './render-writing-pages.mjs'
+import { generateSitemap } from './generate-sitemap.mjs'
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)))
 const outDir = join(rootDir, 'dist')
@@ -16,3 +17,4 @@ execSync(`npx @tailwindcss/cli -i style.css -o ${join(outDir, 'style.css')} --mi
 })
 copyStaticFiles(rootDir, outDir)
 renderWritingPages(join(rootDir, 'writing-md'), join(outDir, 'writing'))
+generateSitemap(rootDir, outDir)
