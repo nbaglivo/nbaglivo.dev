@@ -8,6 +8,7 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 	<head>
 		<title>${resolvedPageTitle} — Nicolás Baglivo</title>
 		<meta name="description" content="${resolvedDescription.replace(/"/g, '&quot;')}">
+		<link rel="icon" type="image/svg+xml" href="../public/icons/favicon.svg">
 		<link rel="stylesheet" href="../style.css">
 		<meta charset="UTF-8">
 	</head>
