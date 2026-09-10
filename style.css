@@ -6,10 +6,38 @@
   src: url('public/fonts/general-sans/GeneralSans-Regular.woff2')
 }
 
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 300;
+  font-display: swap;
+  src: url('public/fonts/ibm-plex-sans/ibm-plex-sans-latin-300-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 400;
+  font-display: swap;
+  src: url('public/fonts/ibm-plex-sans/ibm-plex-sans-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 500;
+  font-display: swap;
+  src: url('public/fonts/ibm-plex-sans/ibm-plex-sans-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-weight: 400;
+  font-display: swap;
+  src: url('public/fonts/ibm-plex-mono/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+}
+
 body {
   --bgcolor: #faf8f4;
   --textcolor: #38352f;
-  font-family: GeneralSanz;
+  font-family: 'IBM Plex Sans', GeneralSanz, sans-serif;
   color: var(--textcolor);
   background: var(--bgcolor);
 }
@@ -22,7 +50,6 @@ a {
   max-width: 42rem;
   margin: 0 auto;
   padding: 4rem 1.5rem 5rem;
-  font-family: 'IBM Plex Sans', GeneralSanz, sans-serif;
 }
 
 .index-title {
