@@ -11,9 +11,10 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 		<link rel="icon" type="image/svg+xml" href="../public/icons/favicon.svg">
 		<link rel="stylesheet" href="../style.css">
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 
-	<body class="min-w-sm">
+	<body>
 		<main class="mx-auto max-w-2xl px-4 pt-4 pb-16 md:pt-16">
 			<a class="inline-block text-sm text-[#8a857b] hover:underline" href="../index.html">← Back</a>
 
