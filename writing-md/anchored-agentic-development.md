@@ -54,8 +54,7 @@ What an ADR is not:
 
 Sequential naming gives you a rough timeline and makes cross-referencing unambiguous. "See ADR-0003" is a complete reference.
 
-**Git is the infrastructure.** ADRs are committed to the repository — Git, not GitHub specifically. GitLab, Bitbucket, anything works. The immutability of a decided ADR is preserved through Git history: you can always see what was decided, when, and what changed. There's no reason to build anything custom around this. The version control you already have is enough.
-
+**Git is the infrastructure.** ADRs are committed to the repository. The immutability of a decided ADR is preserved through Git history: you can always see what was decided, when, and what changed.
 Tags in the frontmatter let you slice context by domain:
 
 ```yaml
@@ -66,7 +65,7 @@ The `adr` tag is what tooling uses to find ADRs. Domain tags let you load only t
 
 #### Writing it
 
-Start with the problem, not the solution. What gap or situation made this decision necessary? If you can't explain the context, the decision will look arbitrary — to a future reader and to an agent building from the system.
+Start with the problem, not the solution. What gap or situation made this decision necessary? If you can't explain the context, the decision will look arbitrary, to a future reader and to an agent building from the system.
 
 Fill in "What was ruled out" even if the answer felt obvious. "We considered X but ruled it out because Y" is information that prevents the same conversation from happening again.
 
@@ -90,7 +89,7 @@ Two checks happen before the ADR is decided.
 - Does this supersede something? If it does, that has to be named explicitly in the Context section.
 - Does this conflict with anything? Every conflict must be resolved in the ADR itself — not in a comment or a conversation.
 
-**Peer review.** Push the draft as a PR. Use the review process you already have — comments, suggestions, iteration. Git hosting gives you this for free. No new process needed.
+**Peer review.** Push the draft as a PR. Use the review process you already have.
 
 ### Merging makes it available
 
