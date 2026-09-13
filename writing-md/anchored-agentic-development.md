@@ -134,7 +134,7 @@ If the plan diverges from the ADRs, correct it here. A conversation costs less �
 
 The ADR context tells agents where the code lives architecturally — the decisions, the constraints, the reasoning. It doesn't replace the rest of your toolkit. Coding standards, skills, rules, MCPs — all of that still applies alongside it.
 
-Your standards tell agents *how* to write code. The ADRs tell agents *what* they're building and *why*. Both need to be present. The ADRs are the part that's usually missing.
+Your standards tell agents *how* to write code. The ADRs tell *why* in that way. Both need to be present. The ADRs are the part that's usually missing.
 
 Setting the anchor and keeping the context in use is the mechanism. What it earns you over time — the compounding effect, when to automate, how the tooling around it evolves — is [Part 2: The payoff](anchored-agentic-development-part-2.html).
 
