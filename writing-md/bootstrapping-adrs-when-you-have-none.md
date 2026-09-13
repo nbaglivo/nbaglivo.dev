@@ -55,6 +55,6 @@ The spirit of the rule is to preserve decision history. You can't preserve histo
 
 There's no clean starting point with a legacy system. You start messy, you iterate, and at some point you cross a threshold where the context is good enough to be genuinely useful.
 
-Once you're there — once Claude has a working mental model of why the system is the way it is — the workflow from the previous posts applies in full. New decisions get made with that context loaded. New ADRs get written from those sessions. The model gets better over time.
+Once you're there — once Claude has a working mental model of why the system is the way it is — the workflow from the previous posts applies in full. New decisions get made with that context loaded. New ADRs get written from those sessions. The model gets better over time. That full workflow is written up in [Anchored Agentic Development](anchored-agentic-development.html).
 
 The bootstrapping phase is just the cost of entry for systems that weren't built with this in mind from the start. It's worth paying.

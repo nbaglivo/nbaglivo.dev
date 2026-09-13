@@ -72,6 +72,6 @@ I didn't set out to write a series. The first post was just me documenting a sys
 
 What's becoming clear is that there's a coherent thread running through all of this: using structured, curated text to give Claude an accurate model of something - your writing style, your job search, your service's architecture. The tool is the same. The context sources are different.
 
-Next, I want to explore what happens when you let that architecture breathe - when you take the decisions that have accumulated in your ADRs and use AI to help visualize the system that emerges from them. How do you see the whole when it's been built decision by decision? That's what the next post will get into.
+Next, I want to explore what happens when you let that architecture breathe - when you take the decisions that have accumulated in your ADRs and use AI to help visualize the system that emerges from them. How do you see the whole when it's been built decision by decision? That's what [Anchored Agentic Development](anchored-agentic-development.html) gets into.
 
 And further down the line, I want to talk about human participation in this process - how this stops being a solo workflow and becomes a team one. Everything I've described so far is one person and one AI. But ADRs were always meant to be a team artifact, and there's an interesting question about how the context, the decisions, and the AI assistance scale when more people are involved. That's a later chapter.
