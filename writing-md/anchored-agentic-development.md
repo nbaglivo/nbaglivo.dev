@@ -18,7 +18,7 @@ The idea behind this framework started taking shape in a post about using ADRs a
 
 The anchor is what prevents entropy. Without it, agents build freely — each making their own decisions, each drifting slightly further from the intended architecture. The drift is quiet at first. Then it compounds.
 
-The anchor is the ADR corpus: a record of architectural decisions that anything building from the system can orient around. Setting it is the human's job — not because AI can't write decisions, but because the anchor only holds if someone owns it. That ownership is what makes it a real constraint rather than a suggestion.
+The anchor is the ADR history: a record of architectural decisions that anything building from the system can orient around. Setting it is the human's job — not because AI can't write decisions, but because the anchor only holds if someone owns it. That ownership is what makes it a real constraint rather than a suggestion.
 
 ### The workflow
 
@@ -94,7 +94,7 @@ Two checks happen before the ADR is decided.
 
 ### Merging makes it available
 
-When the PR merges, the decision is made. The ADR joins the corpus. The anchor is updated.
+When the PR merges, the decision is made. The ADR joins the history. The anchor is updated.
 
 From this moment the context is live — available to every developer, every agent, every automated workflow that builds from the system. Not because anyone loaded it manually. Because it exists, in the repository, part of the record.
 
@@ -112,14 +112,14 @@ The "write an ADR then immediately implement it" scenario is one case, and it's 
 
 How you make the context available depends on the kind of work happening.
 
-For a manual session — a developer opening a Claude session to build something — load the ADR corpus before you start:
+For a manual session — a developer opening a Claude session to build something — load the ADR history before you start:
 
 ```bash
 npx @nbaglivo/ctx --tags adr --output .claude-context.md
 claude --system-prompt-file .claude-context.md
 ```
 
-For agents operating at runtime — responding to events, picking up tickets, executing autonomously — the context needs to be queryable without anyone manually loading files. Tools that expose your ADR corpus to agents at runtime are crucial here: they allow any agent, at any moment, to access the architectural context before acting. How you provide that depends on your setup. What matters is that the context is reachable — not locked in a file someone has to remember to load.
+For agents operating at runtime — responding to events, picking up tickets, executing autonomously — the context needs to be queryable without anyone manually loading files. Tools that expose your ADR history to agents at runtime are crucial here: they allow any agent, at any moment, to access the architectural context before acting. How you provide that depends on your setup. What matters is that the context is reachable — not locked in a file someone has to remember to load.
 
 ### Plan, then build
 
@@ -148,9 +148,9 @@ Each ADR makes the next session smarter. Each build that stays on track is one l
 
 The decisions are recorded and available. Every new decision is checked against prior ones at write time. Every implementation is checked against the record before build time. The work reinforces the foundation instead of eroding it.
 
-**Context engineering matters more as the system grows.** A handful of ADRs fit comfortably in a context window and the process works cleanly. As the system grows and decisions accumulate, loading everything starts to hurt — more tokens, less signal, worse results. Left unmanaged, the context itself becomes entropic: too much noise, too little signal, and the coherence you built up in the ADR corpus stops translating into coherent output. The same force you're trying to counter in the codebase shows up in the context.
+**Context engineering matters more as the system grows.** A handful of ADRs fit comfortably in a context window and the process works cleanly. As the system grows and decisions accumulate, loading everything starts to hurt — more tokens, less signal, worse results. Left unmanaged, the context itself becomes entropic: too much noise, too little signal, and the coherence you built up in the ADR history stops translating into coherent output. The same force you're trying to counter in the codebase shows up in the context.
 
-That's a context engineering problem, not a process problem. The framework still holds. The tooling around it needs to evolve. Domain tags help — load only the ADRs relevant to what you're building right now. But at a certain scale even that isn't enough: you may need semantic search over your ADR corpus, retrieval-based approaches that surface the most relevant decisions given the task, or purpose-built agents that do the selection for you. The right solution depends on the size and shape of your system.
+That's a context engineering problem, not a process problem. The framework still holds. The tooling around it needs to evolve. Domain tags help — load only the ADRs relevant to what you're building right now. But at a certain scale even that isn't enough: you may need semantic search over your ADR history, retrieval-based approaches that surface the most relevant decisions given the task, or purpose-built agents that do the selection for you. The right solution depends on the size and shape of your system.
 
 Tools like ctx are a good starting point. They work well at smaller scale. What replaces or extends them at larger scale is an open question — one worth solving when you hit the ceiling, not before.
 
@@ -164,7 +164,7 @@ The habit is the point. Direction before delegation, every time. The cost is low
 
 I'm actively building tools to make this process faster and more effective. These are what I have so far. As the process gets more adoption, better and different tools will emerge — from me and from others. If you build something that fits here, or have ideas worth discussing, reach out.
 
-**ctx** — assembles tagged markdown files into a single context file. Pull all ADRs for a service or filter by domain. A good starting point for smaller corpora.
+**ctx** — assembles tagged markdown files into a single context file. Pull all ADRs for a service or filter by domain. A good starting point for a smaller ADR history.
 
 → [ctx.nbaglivo.dev](https://ctx.nbaglivo.dev)
 
@@ -176,7 +176,7 @@ I'm actively building tools to make this process faster and more effective. Thes
 
 → [github.com/nbaglivo/anchored-agentic-development/tree/main/skills/adr](https://github.com/nbaglivo/anchored-agentic-development/tree/main/skills/adr)
 
-**The review-adr skill** — validates a draft ADR against your existing corpus. Checks for missing rationale, conflicts, superseded decisions, and gaps before you push for peer review. Use it from Claude Code with `/review-adr`.
+**The review-adr skill** — validates a draft ADR against your existing history. Checks for missing rationale, conflicts, superseded decisions, and gaps before you push for peer review. Use it from Claude Code with `/review-adr`.
 
 → [github.com/nbaglivo/anchored-agentic-development/tree/main/skills/review-adr](https://github.com/nbaglivo/anchored-agentic-development/tree/main/skills/review-adr)
 
@@ -188,7 +188,7 @@ I'm actively building tools to make this process faster and more effective. Thes
 
 Most systems have history that was never written down. You're not starting from zero — the knowledge exists in the code, in a half-maintained wiki, in your own memory. It just needs surfacing.
 
-The bootstrapping process is covered in full [here](bootstrapping-adrs-when-you-have-none.html). The short version: use AI to extract decisions from the codebase, from documentation, and from your own head. Treat the first ADRs as drafts. Relax the immutability rule until they stabilize. Once the corpus is accurate, apply the full process going forward.
+The bootstrapping process is covered in full [here](bootstrapping-adrs-when-you-have-none.html). The short version: use AI to extract decisions from the codebase, from documentation, and from your own head. Treat the first ADRs as drafts. Relax the immutability rule until they stabilize. Once the history is accurate, apply the full process going forward.
 
 ## A note on tooling and AI providers
 
