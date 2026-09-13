@@ -55,6 +55,10 @@ The spirit of the rule is to preserve decision history. You can't preserve histo
 
 There's no clean starting point with a legacy system. You start messy, you iterate, and at some point you cross a threshold where the context is good enough to be genuinely useful.
 
-Once you're there — once Claude has a working mental model of why the system is the way it is — the workflow from the previous posts applies in full. New decisions get made with that context loaded. New ADRs get written from those sessions. The model gets better over time.
+Once you're there — once Claude has a working mental model of why the system is the way it is — the workflow from the previous posts applies in full. New decisions get made with that context loaded. New ADRs get written from those sessions. The model gets better over time. That full workflow is written up in [Anchored Agentic Development](anchored-agentic-development.html).
 
 The bootstrapping phase is just the cost of entry for systems that weren't built with this in mind from the start. It's worth paying.
+
+## A reality check
+
+Your ADRs won't be perfect, and you need to review them. If you solely ask agents to derive decisions from code, you'll end up with hallucinated decisions that were never made, with justifications that nobody ever gave. You'll need to invest time and resist the temptation of delegating. It is better to accept that a decision's rationale was lost, or that a decision was never consciously made and just happened, than to invent (or let an agent invent) fake reasons that might impose unnecessary restrictions.

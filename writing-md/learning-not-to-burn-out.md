@@ -17,4 +17,4 @@ So if you don't agree with something, don't despair. Be true to your thoughts, b
 
 And if by letting them go, the workplace becomes a place where you no longer feel like you can be you and do what you think needs to be done, at least to some meaningful extent, then move on to the next thing. That's what I did. This has been a valuable lesson in life, not just for work, but for everything, and I'm grateful.
 
-If you are going through a similar experience and you want to talk about it, I´m here to listen. You can reach out to me at [nicolas.baglivo@gmail.com](mailto:nicolas.baglivo@gmail.com).
+If you are going through a similar experience and you want to talk about it, I´m here to listen. You can reach out to me at [hi@nbaglivo.dev](mailto:hi@nbaglivo.dev).
