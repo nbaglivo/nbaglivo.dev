@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      matrix:
+        include:
+          - app: nbaglivo
+            project: nbaglivo-dev
+          - app: the-open-inner-monologue
+            project: the-open-inner-monologue
     steps:
       - uses: actions/checkout@v4
 
@@ -18,10 +25,11 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+      - run: npm run build --workspace=apps/${{ matrix.app }}
 
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=nbaglivo-dev
+          workingDirectory: apps/${{ matrix.app }}
+          command: pages deploy dist --project-name=${{ matrix.project }}

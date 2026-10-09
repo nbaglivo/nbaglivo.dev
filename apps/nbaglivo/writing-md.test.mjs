@@ -4,7 +4,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import matter from 'gray-matter'
 
-const sourceDir = join(import.meta.dirname, '..', 'writing-md')
+const sourceDir = join(import.meta.dirname, 'writing-md')
 
 test('every writing-md source has title and date frontmatter, and no leading heading in the body', () => {
   const files = readdirSync(sourceDir).filter((f) => f.endsWith('.md'))

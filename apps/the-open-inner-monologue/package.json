@@ -1,0 +1,26 @@
+{
+  "name": "the-open-inner-monologue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "site": {
+    "url": "https://innermonologue.nbaglivo.dev",
+    "name": "The Open Inner Monologue",
+    "author": "Nicolás Baglivo"
+  },
+  "scripts": {
+    "test": "node --test *.test.mjs",
+    "build": "post-publishing build",
+    "dev": "post-publishing dev --port 8789",
+    "deploy": "npx wrangler pages deploy dist --project-name=the-open-inner-monologue"
+  },
+  "dependencies": {
+    "@nbaglivo/post-publishing": "*"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "gray-matter": "^4.0.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

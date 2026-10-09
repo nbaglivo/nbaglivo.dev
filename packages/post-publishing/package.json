@@ -1,0 +1,19 @@
+{
+  "name": "@nbaglivo/post-publishing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "post-publishing": "./bin/post-publishing.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test src/*.test.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^15.0.1"
+  }
+}

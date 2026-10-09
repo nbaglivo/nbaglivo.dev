@@ -1,12 +1,12 @@
-export function renderPage({ title, subtitle, date, content, pageTitle, description }) {
+export function renderPage({ title, subtitle, date, content, pageTitle, description, siteName, author }) {
   const subtitleHtml = subtitle ? `<p class="text-[#6f6a60] mt-1">${subtitle}</p>\n\t\t\t\t` : ''
   const resolvedPageTitle = pageTitle ?? title
-  const resolvedDescription = description ?? `${title} — notes by Nicolás Baglivo.`
+  const resolvedDescription = description ?? `${title} — notes by ${author}.`
 
   return `<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>${resolvedPageTitle} — Nicolás Baglivo</title>
+		<title>${resolvedPageTitle} — ${siteName}</title>
 		<meta name="description" content="${resolvedDescription.replace(/"/g, '&quot;')}">
 		<link rel="icon" type="image/svg+xml" href="../public/icons/favicon.svg">
 		<link rel="stylesheet" href="../style.css">

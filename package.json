@@ -1,24 +1,18 @@
 {
-  "name": "site",
+  "name": "nbaglivo-dev",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
   "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "test": "node --test build/*.test.mjs",
-    "build": "node build/build.mjs",
-    "dev": "node --watch-path=index.html --watch-path=style.css --watch-path=writing-md --watch-path=public build/build.mjs & npx wrangler pages dev dist --live-reload",
-    "deploy": "npx wrangler pages deploy dist --project-name=nbaglivo-dev"
+    "test": "npm test --workspaces",
+    "build": "npm run build --workspaces --if-present"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.3.3",
-    "@tailwindcss/typography": "^0.5.20",
-    "gray-matter": "^4.0.3",
-    "html-validate": "^11.8.0",
-    "markdown-it": "^15.0.1",
-    "tailwindcss": "^4.3.3"
+    "html-validate": "^11.8.0"
   },
   "allowScripts": {
     "fsevents@2.3.3": true

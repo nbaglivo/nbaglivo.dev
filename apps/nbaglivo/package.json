@@ -1,0 +1,26 @@
+{
+  "name": "nbaglivo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "site": {
+    "url": "https://nbaglivo.dev",
+    "name": "Nicolás Baglivo",
+    "author": "Nicolás Baglivo"
+  },
+  "scripts": {
+    "test": "node --test *.test.mjs",
+    "build": "post-publishing build",
+    "dev": "post-publishing dev",
+    "deploy": "npx wrangler pages deploy dist --project-name=nbaglivo-dev"
+  },
+  "dependencies": {
+    "@nbaglivo/post-publishing": "*"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "gray-matter": "^4.0.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

@@ -19,7 +19,7 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultLinkOpen(tokens, idx, options, env, self)
 }
 
-export function renderWritingPages(sourceDir, outDir) {
+export function renderWritingPages(sourceDir, outDir, { siteName, author }) {
   mkdirSync(outDir, { recursive: true })
 
   const files = readdirSync(sourceDir).filter((file) => file.endsWith('.md'))
@@ -39,6 +39,8 @@ export function renderWritingPages(sourceDir, outDir) {
       content: md.render(content),
       pageTitle: data.pageTitle,
       description: data.subtitle,
+      siteName,
+      author,
     })
 
     const slug = basename(file, '.md')

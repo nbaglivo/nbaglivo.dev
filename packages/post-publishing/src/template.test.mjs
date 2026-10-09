@@ -2,8 +2,11 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { renderPage } from './template.mjs'
 
+const site = { siteName: 'Nicolás Baglivo', author: 'Nicolás Baglivo' }
+
 test('renderPage includes title, date, and content inside a prose container', () => {
   const html = renderPage({
+    ...site,
     title: 'Test Title',
     subtitle: undefined,
     date: 'Jan 1, 2026',
@@ -17,17 +20,18 @@ test('renderPage includes title, date, and content inside a prose container', ()
 })
 
 test('renderPage omits the subtitle paragraph when subtitle is absent', () => {
-  const html = renderPage({ title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.doesNotMatch(html, /text-\[#6f6a60\] mt-1/)
 })
 
 test('renderPage includes the subtitle paragraph when subtitle is present', () => {
-  const html = renderPage({ title: 'T', subtitle: 'Sub', date: 'Jan 1, 2026', content: '<p>x</p>' })
+  const html = renderPage({ ...site, title: 'T', subtitle: 'Sub', date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.match(html, /<p class="text-\[#6f6a60\] mt-1">Sub<\/p>/)
 })
 
 test('renderPage uses the given description for the meta description tag', () => {
   const html = renderPage({
+    ...site,
     title: 'T',
     subtitle: undefined,
     date: 'Jan 1, 2026',
@@ -38,12 +42,13 @@ test('renderPage uses the given description for the meta description tag', () =>
 })
 
 test('renderPage falls back to a title-based description when none is given', () => {
-  const html = renderPage({ title: 'Test Title', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  const html = renderPage({ ...site, title: 'Test Title', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.match(html, /<meta name="description" content="Test Title — notes by Nicolás Baglivo\.">/)
 })
 
 test('renderPage escapes double quotes in the description', () => {
   const html = renderPage({
+    ...site,
     title: 'T',
     subtitle: undefined,
     date: 'Jan 1, 2026',
@@ -55,6 +60,7 @@ test('renderPage escapes double quotes in the description', () => {
 
 test('renderPage uses pageTitle for the <title> tag when provided, keeping the full title in the <h2>', () => {
   const html = renderPage({
+    ...site,
     title: 'A Very Long Full Title That Would Otherwise Blow The Limit',
     subtitle: undefined,
     date: 'Jan 1, 2026',
@@ -70,6 +76,19 @@ test('renderPage uses pageTitle for the <title> tag when provided, keeping the f
 })
 
 test('renderPage falls back to title for the <title> tag when pageTitle is absent', () => {
-  const html = renderPage({ title: 'Test Title', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  const html = renderPage({ ...site, title: 'Test Title', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.match(html, /<title>Test Title — Nicolás Baglivo<\/title>/)
+})
+
+test('renderPage uses siteName for the <title> suffix and author for the fallback description', () => {
+  const html = renderPage({
+    title: 'Test Title',
+    subtitle: undefined,
+    date: 'Jan 1, 2026',
+    content: '<p>x</p>',
+    siteName: 'The Open Inner Monologue',
+    author: 'Nicolás Baglivo',
+  })
+  assert.match(html, /<title>Test Title — The Open Inner Monologue<\/title>/)
+  assert.match(html, /<meta name="description" content="Test Title — notes by Nicolás Baglivo\.">/)
 })

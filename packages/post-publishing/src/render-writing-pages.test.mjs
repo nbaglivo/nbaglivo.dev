@@ -5,6 +5,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { renderWritingPages } from './render-writing-pages.mjs'
 
+const site = { siteName: 'Nicolás Baglivo', author: 'Nicolás Baglivo' }
+
 test('renderWritingPages converts a frontmatter markdown file into an HTML page in outDir', () => {
   const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
   const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
@@ -14,7 +16,7 @@ test('renderWritingPages converts a frontmatter markdown file into an HTML page 
     '---\ntitle: "My Post"\nsubtitle: "A subtitle"\ndate: "Jan 1, 2026"\n---\n\nHello **world**.\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'my-post.html'), 'utf-8')
   assert.match(html, /My Post/)
@@ -32,7 +34,7 @@ test('renderWritingPages omits the subtitle paragraph for a post with no subtitl
     '---\ntitle: "No Subtitle"\ndate: "Jan 1, 2026"\n---\n\nBody text.\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'no-subtitle.html'), 'utf-8')
   assert.doesNotMatch(html, /text-\[#6f6a60\] mt-1/)
@@ -47,7 +49,7 @@ test('renderWritingPages uses the subtitle frontmatter as the meta description',
     '---\ntitle: "My Post"\nsubtitle: "A subtitle"\ndate: "Jan 1, 2026"\n---\n\nHello.\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'my-post.html'), 'utf-8')
   assert.match(html, /<meta name="description" content="A subtitle">/)
@@ -62,7 +64,7 @@ test('renderWritingPages falls back to a title-based meta description for a post
     '---\ntitle: "No Subtitle"\ndate: "Jan 1, 2026"\n---\n\nBody text.\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'no-subtitle.html'), 'utf-8')
   assert.match(html, /<meta name="description" content="No Subtitle — notes by Nicolás Baglivo\.">/)
@@ -77,7 +79,7 @@ test('renderWritingPages uses pageTitle frontmatter for the <title> tag while ke
     '---\ntitle: "A Very Long Full Title That Would Otherwise Blow The Length Limit"\ndate: "Jan 1, 2026"\npageTitle: "A Short Title"\n---\n\nBody text.\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'long-title-post.html'), 'utf-8')
   assert.match(html, /<title>A Short Title — Nicolás Baglivo<\/title>/)
@@ -94,7 +96,7 @@ test('renderWritingPages throws a clear error when a markdown file has no frontm
   writeFileSync(join(sourceDir, 'no-frontmatter.md'), 'Just some body text with no frontmatter at all.\n')
 
   assert.throws(
-    () => renderWritingPages(sourceDir, outDir),
+    () => renderWritingPages(sourceDir, outDir, site),
     /no-frontmatter\.md: missing required frontmatter "title" and\/or "date"/
   )
 })
@@ -109,7 +111,7 @@ test('renderWritingPages throws a clear error when frontmatter is missing title 
   )
 
   assert.throws(
-    () => renderWritingPages(sourceDir, outDir),
+    () => renderWritingPages(sourceDir, outDir, site),
     /missing-date\.md: missing required frontmatter "title" and\/or "date"/
   )
 })
@@ -123,7 +125,7 @@ test('renderWritingPages adds target="_blank" rel="noopener noreferrer" to exter
     '---\ntitle: "Links Post"\ndate: "Jan 1, 2026"\n---\n\nSee [external](https://example.com) and [internal](other-post.html).\n'
   )
 
-  renderWritingPages(sourceDir, outDir)
+  renderWritingPages(sourceDir, outDir, site)
 
   const html = readFileSync(join(outDir, 'links-post.html'), 'utf-8')
   assert.match(html, /<a href="https:\/\/example\.com" target="_blank" rel="noopener noreferrer">external<\/a>/)
