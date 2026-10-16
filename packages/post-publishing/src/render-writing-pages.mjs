@@ -1,23 +1,8 @@
 import { readdirSync, readFileSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import matter from 'gray-matter'
-import MarkdownIt from 'markdown-it'
+import { renderMarkdown } from './markdown.mjs'
 import { renderPage } from './template.mjs'
-
-const md = new MarkdownIt()
-
-const defaultLinkOpen = md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
-  return self.renderToken(tokens, idx, options)
-}
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  const hrefIndex = tokens[idx].attrIndex('href')
-  const href = hrefIndex >= 0 ? tokens[idx].attrs[hrefIndex][1] : ''
-  if (href.startsWith('http')) {
-    tokens[idx].attrPush(['target', '_blank'])
-    tokens[idx].attrPush(['rel', 'noopener noreferrer'])
-  }
-  return defaultLinkOpen(tokens, idx, options, env, self)
-}
 
 export function renderWritingPages(sourceDir, outDir, { siteName, author }) {
   mkdirSync(outDir, { recursive: true })
@@ -36,7 +21,7 @@ export function renderWritingPages(sourceDir, outDir, { siteName, author }) {
       title: data.title,
       subtitle: data.subtitle,
       date: data.date,
-      content: md.render(content),
+      content: renderMarkdown(content),
       pageTitle: data.pageTitle,
       description: data.subtitle,
       siteName,
