@@ -6,7 +6,8 @@
   "site": {
     "url": "https://nbaglivo.dev",
     "name": "Nicolás Baglivo",
-    "author": "Nicolás Baglivo"
+    "author": "Nicolás Baglivo",
+    "description": "Notes, essays, opinions, and other work by Nicolás Baglivo."
   },
   "scripts": {
     "test": "node --test *.test.mjs",
