@@ -4,8 +4,9 @@ import { join } from 'node:path'
 import { copyStaticFiles } from './copy-static.mjs'
 import { renderWritingPages } from './render-writing-pages.mjs'
 import { generateSitemap } from './generate-sitemap.mjs'
+import { generateFeed } from './generate-feed.mjs'
 
-export function buildSite({ rootDir, siteUrl, siteName, author }) {
+export function buildSite({ rootDir, siteUrl, siteName, siteDescription, author }) {
   const outDir = join(rootDir, 'dist')
   const sourceDir = join(rootDir, 'writing-md')
 
@@ -18,4 +19,5 @@ export function buildSite({ rootDir, siteUrl, siteName, author }) {
   copyStaticFiles(rootDir, outDir)
   renderWritingPages(sourceDir, join(outDir, 'writing'), { siteName, author })
   generateSitemap(sourceDir, outDir, siteUrl)
+  generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author })
 }

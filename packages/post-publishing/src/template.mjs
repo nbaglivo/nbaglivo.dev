@@ -10,6 +10,7 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 		<meta name="description" content="${resolvedDescription.replace(/"/g, '&quot;')}">
 		<link rel="icon" type="image/svg+xml" href="../public/icons/favicon.svg">
 		<link rel="stylesheet" href="../style.css">
+		<link rel="alternate" type="application/rss+xml" title="${siteName}" href="../feed.xml">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>

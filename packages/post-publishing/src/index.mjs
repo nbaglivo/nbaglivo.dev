@@ -1,5 +1,6 @@
 export { buildSite } from './build-site.mjs'
 export { copyStaticFiles } from './copy-static.mjs'
+export { generateFeed } from './generate-feed.mjs'
 export { generateSitemap } from './generate-sitemap.mjs'
 export { renderWritingPages } from './render-writing-pages.mjs'
 export { renderPage } from './template.mjs'

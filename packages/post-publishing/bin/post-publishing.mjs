@@ -22,7 +22,7 @@ function readSiteConfig() {
 
 function build() {
   const site = readSiteConfig()
-  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, author: site.author })
+  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, siteDescription: site.description, author: site.author })
 }
 
 function dev() {

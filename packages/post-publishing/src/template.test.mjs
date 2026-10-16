@@ -92,3 +92,8 @@ test('renderPage uses siteName for the <title> suffix and author for the fallbac
   assert.match(html, /<title>Test Title — The Open Inner Monologue<\/title>/)
   assert.match(html, /<meta name="description" content="Test Title — notes by Nicolás Baglivo\.">/)
 })
+
+test('renderPage advertises the site RSS feed for autodiscovery', () => {
+  const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  assert.match(html, /<link rel="alternate" type="application\/rss\+xml" title="Nicolás Baglivo" href="\.\.\/feed\.xml">/)
+})
