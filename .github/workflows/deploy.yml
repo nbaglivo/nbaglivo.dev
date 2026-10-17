@@ -14,6 +14,8 @@ jobs:
         include:
           - app: nbaglivo
             project: nbaglivo-dev
+          - app: engineering
+            project: engineering-nbaglivo
           - app: the-open-inner-monologue
             project: the-open-inner-monologue
     steps:
