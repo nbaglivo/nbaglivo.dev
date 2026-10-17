@@ -1,0 +1,16 @@
+{
+  "subject": "acct:nico@innermonologue.nbaglivo.dev",
+  "aliases": ["https://ap.nbaglivo.dev/users/inner-monologue"],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://ap.nbaglivo.dev/users/inner-monologue"
+    },
+    {
+      "rel": "http://webfinger.net/rel/profile-page",
+      "type": "text/html",
+      "href": "https://innermonologue.nbaglivo.dev/"
+    }
+  ]
+}
