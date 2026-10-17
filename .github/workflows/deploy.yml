@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      WARMHOLE_SYNC_TOKEN: ${{ secrets.WARMHOLE_SYNC_TOKEN }}
     strategy:
       matrix:
         include:
@@ -18,6 +20,7 @@ jobs:
             project: engineering-nbaglivo
           - app: the-open-inner-monologue
             project: the-open-inner-monologue
+            warmhole_site: inner-monologue
     steps:
       - uses: actions/checkout@v4
 
@@ -35,3 +38,10 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/${{ matrix.app }}
           command: pages deploy dist --project-name=${{ matrix.project }}
+
+      - name: Notify warmhole
+        if: matrix.warmhole_site && env.WARMHOLE_SYNC_TOKEN
+        run: >
+          curl --fail --retry 3 -X POST
+          -H "Authorization: Bearer $WARMHOLE_SYNC_TOKEN"
+          https://ap.nbaglivo.dev/sites/${{ matrix.warmhole_site }}/sync
