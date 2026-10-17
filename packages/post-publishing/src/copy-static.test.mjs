@@ -20,3 +20,45 @@ test('copyStaticFiles copies index.html, robots.txt, and the public directory in
   assert.ok(existsSync(join(outDir, 'public', 'icons', 'test.svg')))
   assert.equal(readFileSync(join(outDir, 'public', 'icons', 'test.svg'), 'utf-8'), '<svg></svg>')
 })
+
+test('copyStaticFiles copies _headers and .well-known when the site has them', () => {
+  const rootDir = mkdtempSync(join(tmpdir(), 'site-root-'))
+  const outDir = mkdtempSync(join(tmpdir(), 'site-out-'))
+  writeFileSync(join(rootDir, 'index.html'), '<html>root</html>')
+  writeFileSync(join(rootDir, 'robots.txt'), 'User-agent: *\nAllow: /\n')
+  mkdirSync(join(rootDir, 'public'))
+  writeFileSync(join(rootDir, '_headers'), '/.well-known/webfinger\n  Content-Type: application/jrd+json\n')
+  mkdirSync(join(rootDir, '.well-known'))
+  writeFileSync(join(rootDir, '.well-known', 'webfinger'), '{"subject":"acct:me@example.dev"}')
+
+  copyStaticFiles(rootDir, outDir)
+
+  assert.equal(readFileSync(join(outDir, '_headers'), 'utf-8'), '/.well-known/webfinger\n  Content-Type: application/jrd+json\n')
+  assert.equal(readFileSync(join(outDir, '.well-known', 'webfinger'), 'utf-8'), '{"subject":"acct:me@example.dev"}')
+})
+
+test('copyStaticFiles skips _headers and .well-known when the site has none', () => {
+  const rootDir = mkdtempSync(join(tmpdir(), 'site-root-'))
+  const outDir = mkdtempSync(join(tmpdir(), 'site-out-'))
+  writeFileSync(join(rootDir, 'index.html'), '<html>root</html>')
+  writeFileSync(join(rootDir, 'robots.txt'), 'User-agent: *\nAllow: /\n')
+  mkdirSync(join(rootDir, 'public'))
+
+  copyStaticFiles(rootDir, outDir)
+
+  assert.ok(!existsSync(join(outDir, '_headers')))
+  assert.ok(!existsSync(join(outDir, '.well-known')))
+})
+
+test('copyStaticFiles copies _redirects when the site has one', () => {
+  const rootDir = mkdtempSync(join(tmpdir(), 'site-root-'))
+  const outDir = mkdtempSync(join(tmpdir(), 'site-out-'))
+  writeFileSync(join(rootDir, 'index.html'), '<html>root</html>')
+  writeFileSync(join(rootDir, 'robots.txt'), 'User-agent: *\nAllow: /\n')
+  mkdirSync(join(rootDir, 'public'))
+  writeFileSync(join(rootDir, '_redirects'), '/old /new 301\n')
+
+  copyStaticFiles(rootDir, outDir)
+
+  assert.equal(readFileSync(join(outDir, '_redirects'), 'utf-8'), '/old /new 301\n')
+})
