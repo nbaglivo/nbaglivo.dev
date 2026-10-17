@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process'
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { existsSync, readFileSync } from 'node:fs'
+import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
 import { buildSite } from '../src/build-site.mjs'
 
@@ -27,7 +27,7 @@ function build() {
 
 function dev() {
   const watchPaths = ['index.html', 'style.css', 'writing-md', 'public', join(import.meta.dirname, '..', 'src')]
-  const watchArgs = watchPaths.map((path) => `--watch-path=${path}`)
+  const watchArgs = watchPaths.filter((path) => existsSync(resolve(rootDir, path))).map((path) => `--watch-path=${path}`)
   const children = [
     spawn(process.execPath, [...watchArgs, import.meta.filename, 'build'], { stdio: 'inherit' }),
     spawn('npx', ['wrangler', 'pages', 'dev', 'dist', '--live-reload', '--port', values.port], { stdio: 'inherit' }),

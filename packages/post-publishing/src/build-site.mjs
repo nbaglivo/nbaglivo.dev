@@ -1,5 +1,5 @@
 import { execSync } from 'node:child_process'
-import { mkdirSync, rmSync } from 'node:fs'
+import { existsSync, mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { copyStaticFiles } from './copy-static.mjs'
 import { renderWritingPages } from './render-writing-pages.mjs'
@@ -17,7 +17,9 @@ export function buildSite({ rootDir, siteUrl, siteName, siteDescription, author 
     stdio: 'inherit',
   })
   copyStaticFiles(rootDir, outDir)
-  renderWritingPages(sourceDir, join(outDir, 'writing'), { siteName, author })
+  if (existsSync(sourceDir)) {
+    renderWritingPages(sourceDir, join(outDir, 'writing'), { siteName, author })
+    generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author })
+  }
   generateSitemap(sourceDir, outDir, siteUrl)
-  generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author })
 }

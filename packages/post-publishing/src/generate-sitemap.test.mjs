@@ -32,3 +32,14 @@ test('generateSitemap includes one url entry per writing post', () => {
   const xml = readFileSync(join(outDir, 'sitemap.xml'), 'utf-8')
   assert.equal(xml.match(/<url>/g).length, 3)
 })
+
+test('generateSitemap lists only the homepage when the site has no writing directory', () => {
+  const sourceDir = join(mkdtempSync(join(tmpdir(), 'sitemap-src-')), 'writing-md')
+  const outDir = mkdtempSync(join(tmpdir(), 'sitemap-out-'))
+
+  generateSitemap(sourceDir, outDir, 'https://nbaglivo.dev')
+
+  const xml = readFileSync(join(outDir, 'sitemap.xml'), 'utf-8')
+  assert.equal(xml.match(/<url>/g).length, 1)
+  assert.match(xml, /<loc>https:\/\/nbaglivo\.dev\/<\/loc>/)
+})

@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import matter from 'gray-matter'
 
@@ -13,7 +13,7 @@ function urlEntry(loc, lastmod) {
 }
 
 export function generateSitemap(sourceDir, outDir, siteUrl) {
-  const files = readdirSync(sourceDir).filter((file) => file.endsWith('.md'))
+  const files = existsSync(sourceDir) ? readdirSync(sourceDir).filter((file) => file.endsWith('.md')) : []
 
   const urls = [urlEntry(`${siteUrl}/`)]
 
