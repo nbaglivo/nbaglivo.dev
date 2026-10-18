@@ -89,7 +89,7 @@ a {
 }
 
 .index-groups {
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.875rem;
@@ -124,13 +124,6 @@ a {
   padding: 8px 14px;
   margin: 0 -14px;
   border-radius: 5px;
-  background: transparent;
-  transition: background 200ms ease, color 200ms ease;
-}
-
-.index-post:hover {
-  background: #f2ede2;
-  color: #201e1a;
 }
 
 .index-footer {
@@ -157,18 +150,5 @@ a {
   .index-main {
     padding: 3rem 1.25rem 3.5rem;
   }
-}
-
-.index-back {
-  display: inline-block;
-  margin-bottom: 2rem;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.78rem;
-  color: #726d62;
-  text-decoration: none;
-}
-
-.index-back:hover {
-  color: #38352f;
 }
 
