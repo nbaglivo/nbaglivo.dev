@@ -63,4 +63,4 @@ The bootstrapping process is covered in full [here](bootstrapping-adrs-when-you-
 
 This framework is described using Claude and Claude Code because that's what I use. The process works with any capable AI — the tools that load context may need to be adapted, but the loop is the same. Write the decision. Load it as context. Plan before you build.
 
-Reach out at [hi@nbaglivo.dev](mailto:hi@nbaglivo.dev).
+Escribime a [hi@nbaglivo.dev](mailto:hi@nbaglivo.dev).

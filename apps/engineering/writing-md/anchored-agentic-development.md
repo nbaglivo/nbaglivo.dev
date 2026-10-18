@@ -138,4 +138,4 @@ Your standards tell agents *how* to write code. The ADRs tell *why* in that way.
 
 Setting the anchor and keeping the context in use is the mechanism. What it earns you over time — the compounding effect, when to automate, how the tooling around it evolves — is [Part 2: The payoff](anchored-agentic-development-part-2.html).
 
-Reach out at [hi@nbaglivo.dev](mailto:hi@nbaglivo.dev).
+Escribime a [hi@nbaglivo.dev](mailto:hi@nbaglivo.dev).
