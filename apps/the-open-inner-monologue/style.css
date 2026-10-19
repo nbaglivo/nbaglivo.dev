@@ -79,7 +79,7 @@ a {
 
 .index-social a {
   text-decoration: none;
-  border-bottom: 1px solid #d9d1c2;
+  border-bottom: 2px dotted #d9d1c2;
   transition: color 180ms ease, border-color 180ms ease;
 }
 
@@ -143,11 +143,21 @@ a {
 .index-footer a {
   color: #38352f;
   text-decoration: none;
-  border-bottom: 1px solid #cfc7b8;
+  border-bottom: 2px dotted #cfc7b8;
   transition: border-color 180ms ease;
 }
 
 .index-footer a:hover {
+  border-bottom-color: #38352f;
+}
+
+.prose a {
+  text-decoration: none;
+  border-bottom: 2px dotted #cfc7b8;
+  transition: border-color 180ms ease;
+}
+
+.prose a:hover {
   border-bottom-color: #38352f;
 }
 

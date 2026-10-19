@@ -17,7 +17,7 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 
 	<body>
 		<main class="mx-auto max-w-2xl px-4 pt-4 pb-16 md:pt-16">
-			<a class="inline-block text-sm text-[#8a857b] hover:underline" href="../index.html">← Back</a>
+			<a class="inline-block text-sm text-[#8a857b] border-b-2 border-dotted border-[#cfc7b8] transition-colors hover:border-[#38352f]" href="../index.html">← Back</a>
 
 			<article class="mt-6">
 				<h2 class="text-2xl font-medium tracking-tight text-[#38352f]">${title}</h2>
