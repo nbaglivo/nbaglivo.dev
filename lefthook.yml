@@ -8,3 +8,12 @@ pre-commit:
       glob: "*.html"
       stage_fixed: true
 
+
+pre-push:
+  jobs:
+    - name: lighthouse
+      run: npm run lighthouse
+      glob:
+        - "apps/**/*.{html,css,md}"
+        - "apps/*/public/**"
+        - "packages/post-publishing/src/**"

@@ -9,9 +9,11 @@
   ],
   "scripts": {
     "test": "npm test --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "build": "npm run build --workspaces --if-present",
+    "lighthouse": "./scripts/lighthouse.sh"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "html-validate": "^11.8.0"
   },
   "allowScripts": {
