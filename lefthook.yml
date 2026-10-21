@@ -4,7 +4,7 @@ pre-commit:
   parallel: true
   jobs:
     - name: html-validate
-      run: npmx html-validate '{staged_files}'
+      run: npx html-validate '{staged_files}'
       glob: "*.html"
       stage_fixed: true
 
