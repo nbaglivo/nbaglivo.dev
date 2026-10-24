@@ -60,6 +60,10 @@ a {
   letter-spacing: -0.01em;
 }
 
+.index-desc {
+  margin: 1rem 0;
+}
+
 .index-groups {
   margin-top: 2rem;
   display: flex;
