@@ -53,3 +53,11 @@ test('generateFeed resolves relative links in post content against the post URL'
   assert.match(xml, /<a href="https:\/\/nbaglivo\.dev\/writing\/other-post\.html">other<\/a>/)
   assert.match(xml, /<a href="https:\/\/example\.com" target="_blank" rel="noopener noreferrer">ext<\/a>/)
 })
+
+test('generateFeed resolves relative image sources in post content against the post URL', () => {
+  const xml = buildFeed({
+    'images.md': '---\ntitle: "Images"\ndate: "Jan 1, 2026"\n---\n\n![A phone](../public/images/images/phone.png)\n',
+  })
+
+  assert.match(xml, /<img src="https:\/\/nbaglivo\.dev\/public\/images\/images\/phone\.png" alt="A phone"/)
+})

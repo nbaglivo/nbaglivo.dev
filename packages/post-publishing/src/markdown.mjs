@@ -17,6 +17,18 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultLinkOpen(tokens, idx, options, env, self)
 }
 
+const defaultImage = md.renderer.rules.image
+md.renderer.rules.image = function (tokens, idx, options, env, self) {
+  const srcIndex = tokens[idx].attrIndex('src')
+  const src = tokens[idx].attrs[srcIndex][1]
+  if (env.baseUrl && !src.startsWith('http') && !src.startsWith('data:')) {
+    tokens[idx].attrs[srcIndex][1] = new URL(src, env.baseUrl).href
+  }
+  tokens[idx].attrPush(['loading', 'lazy'])
+  tokens[idx].attrPush(['decoding', 'async'])
+  return defaultImage(tokens, idx, options, env, self)
+}
+
 export function renderMarkdown(content, { baseUrl } = {}) {
   return md.render(content, { baseUrl })
 }

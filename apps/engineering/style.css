@@ -133,6 +133,12 @@ a {
   border-bottom-color: #38352f;
 }
 
+.prose img {
+  width: auto;
+  max-height: 80vh;
+  margin-inline: auto;
+}
+
 @media (max-width: 480px) {
   .index-main {
     padding: 3rem 1.25rem 3.5rem;

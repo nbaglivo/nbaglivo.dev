@@ -131,3 +131,18 @@ test('renderWritingPages adds target="_blank" rel="noopener noreferrer" to exter
   assert.match(html, /<a href="https:\/\/example\.com" target="_blank" rel="noopener noreferrer">external<\/a>/)
   assert.match(html, /<a href="other-post\.html">internal<\/a>/)
 })
+
+test('renderWritingPages renders markdown images lazily with their relative source kept', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+
+  writeFileSync(
+    join(sourceDir, 'with-image.md'),
+    '---\ntitle: "With Image"\ndate: "Jan 1, 2026"\n---\n\n![A phone](../public/images/with-image/phone.png)\n'
+  )
+
+  renderWritingPages(sourceDir, outDir, site)
+
+  const html = readFileSync(join(outDir, 'with-image.html'), 'utf-8')
+  assert.match(html, /<img src="\.\.\/public\/images\/with-image\/phone\.png" alt="A phone" loading="lazy" decoding="async">/)
+})
