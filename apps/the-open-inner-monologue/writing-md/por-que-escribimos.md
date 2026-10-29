@@ -1,5 +1,5 @@
 ---
-title: "Por que leemos"
+title: "Por que escribimos"
 date: "Oct 16, 2026"
 ---
 
