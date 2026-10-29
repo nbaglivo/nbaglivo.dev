@@ -1,5 +1,5 @@
 ---
-title: "Pr review is not broken"
+title: "PR review is not broken"
 date: "Oct 29, 2026"
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "My AI workflow got obselete again"
+title: "My AI workflow got obsolete again"
 date: "Oct 21, 2026"
 ---
 
