@@ -119,6 +119,10 @@ a {
   transition: border-color 180ms ease;
 }
 
+.index-handle {
+  color: #38352f;
+}
+
 .index-footer a:hover {
   border-bottom-color: #38352f;
 }
