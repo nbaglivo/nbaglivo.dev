@@ -11,3 +11,5 @@ So, how do I keep living in a world that is all about connectivity and apps with
 
 
 ![My calm shell running on the One Plus 6](../public/images/my-own-phone/calm-shell-oneplus6.png)
+
+The code is on GitHub: [nbaglivo/aligned-phone](https://github.com/nbaglivo/aligned-phone).
