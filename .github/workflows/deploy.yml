@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     env:
-      WARMHOLE_SYNC_TOKEN: ${{ secrets.WARMHOLE_SYNC_TOKEN }}
+      WARMHOLE_SYNC_TOKEN: ${{ secrets[matrix.warmhole_token_secret] }}
     strategy:
       matrix:
         include:
@@ -18,9 +18,12 @@ jobs:
             project: nbaglivo-dev
           - app: engineering
             project: engineering-nbaglivo
+            warmhole_site: engineering
+            warmhole_token_secret: WARMHOLE_ENGINEERING_SYNC_TOKEN
           - app: the-open-inner-monologue
             project: the-open-inner-monologue
             warmhole_site: inner-monologue
+            warmhole_token_secret: WARMHOLE_SYNC_TOKEN
     steps:
       - uses: actions/checkout@v4
 

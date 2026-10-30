@@ -1,3 +1,0 @@
-/.well-known/webfinger
-  Content-Type: application/jrd+json
-  Access-Control-Allow-Origin: *
