@@ -26,6 +26,7 @@ export function renderWritingPages(sourceDir, outDir, { siteName, author }) {
       description: data.subtitle,
       siteName,
       author,
+      lang: data.lang,
     })
 
     const slug = basename(file, '.md')

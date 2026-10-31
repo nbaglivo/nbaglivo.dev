@@ -1,11 +1,12 @@
-export function renderPage({ title, subtitle, date, content, pageTitle, description, siteName, author }) {
+export function renderPage({ title, subtitle, date, content, pageTitle, description, siteName, author, lang = 'en' }) {
   const subtitleHtml = subtitle ? `<p class="text-[#6f6a60] mt-1">${subtitle}</p>\n\t\t\t\t` : ''
   const resolvedPageTitle = pageTitle ?? title
   const resolvedDescription = description ?? `${title} — notes by ${author}.`
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${lang}">
 	<head>
+		<meta charset="UTF-8">
 		<title>${resolvedPageTitle} — ${siteName}</title>
 		<meta name="description" content="${resolvedDescription.replace(/"/g, '&quot;')}">
 		<link rel="icon" type="image/svg+xml" href="../public/icons/favicon.svg">
@@ -13,7 +14,6 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 		<link rel="preload" href="../public/fonts/ibm-plex-sans/ibm-plex-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="stylesheet" href="../style.css">
 		<link rel="alternate" type="application/rss+xml" title="${siteName}" href="../feed.xml">
-		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 

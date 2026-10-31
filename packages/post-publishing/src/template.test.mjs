@@ -97,3 +97,18 @@ test('renderPage advertises the site RSS feed for autodiscovery', () => {
   const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.match(html, /<link rel="alternate" type="application\/rss\+xml" title="Nicolás Baglivo" href="\.\.\/feed\.xml">/)
 })
+
+test('renderPage defaults the document language to English', () => {
+  const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  assert.match(html, /<html lang="en">/)
+})
+
+test('renderPage uses the given lang for the document language', () => {
+  const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>', lang: 'es' })
+  assert.match(html, /<html lang="es">/)
+})
+
+test('renderPage declares the charset as the first element in <head>', () => {
+  const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
+  assert.match(html, /<head>\s*<meta charset="UTF-8">/)
+})

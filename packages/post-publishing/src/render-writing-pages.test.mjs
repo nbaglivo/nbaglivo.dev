@@ -146,3 +146,18 @@ test('renderWritingPages renders markdown images lazily with their relative sour
   const html = readFileSync(join(outDir, 'with-image.html'), 'utf-8')
   assert.match(html, /<img src="\.\.\/public\/images\/with-image\/phone\.png" alt="A phone" loading="lazy" decoding="async">/)
 })
+
+test('renderWritingPages uses the lang frontmatter for the document language', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+
+  writeFileSync(
+    join(sourceDir, 'spanish-post.md'),
+    '---\ntitle: "Un post"\ndate: "Jan 1, 2026"\nlang: es\n---\n\nHola.\n'
+  )
+
+  renderWritingPages(sourceDir, outDir, site)
+
+  const html = readFileSync(join(outDir, 'spanish-post.html'), 'utf-8')
+  assert.match(html, /<html lang="es">/)
+})
