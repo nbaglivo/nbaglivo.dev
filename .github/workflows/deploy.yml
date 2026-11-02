@@ -24,6 +24,8 @@ jobs:
             project: the-open-inner-monologue
             warmhole_site: inner-monologue
             warmhole_token_secret: WARMHOLE_SYNC_TOKEN
+          - app: now-what
+            project: now-what
     steps:
       - uses: actions/checkout@v4
 

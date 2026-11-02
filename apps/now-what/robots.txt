@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://now-what.nbaglivo.dev/sitemap.xml
