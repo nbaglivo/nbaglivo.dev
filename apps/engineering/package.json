@@ -7,7 +7,12 @@
     "url": "https://engineering.nbaglivo.dev",
     "name": "Nicolás Baglivo",
     "author": "Nicolás Baglivo",
-    "description": "Engineering ideas and projects by Nicolás Baglivo."
+    "description": "Engineering ideas and projects by Nicolás Baglivo.",
+    "subscribe": {
+      "siteId": "engineering",
+      "lang": "en",
+      "blogName": "Engineering ideas and projects"
+    }
   },
   "scripts": {
     "test": "node --test *.test.mjs",
