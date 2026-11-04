@@ -1,9 +1,9 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtempSync, writeFileSync, readFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, writeFileSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { renderWritingPages } from './render-writing-pages.mjs'
+import { renderSubscribePages, renderWritingPages } from './render-writing-pages.mjs'
 
 const site = { siteName: 'Nicolás Baglivo', author: 'Nicolás Baglivo' }
 
@@ -160,4 +160,34 @@ test('renderWritingPages uses the lang frontmatter for the document language', (
 
   const html = readFileSync(join(outDir, 'spanish-post.html'), 'utf-8')
   assert.match(html, /<html lang="es">/)
+})
+
+const subscribe = { siteId: 'engineering', lang: 'en', blogName: 'Engineering ideas and projects' }
+
+test('renderWritingPages adds the signup form when the site has a subscribe config', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+  writeFileSync(join(sourceDir, 'post.md'), '---\ntitle: "Post"\ndate: "Jan 1, 2026"\n---\n\nBody.\n')
+
+  renderWritingPages(sourceDir, outDir, { ...site, subscribe })
+
+  assert.match(readFileSync(join(outDir, 'post.html'), 'utf-8'), /sites\/engineering\/subscribe/)
+})
+
+test('renderSubscribePages writes each page to the exact path warmhole redirects to', () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'subscribe-out-'))
+
+  renderSubscribePages(outDir, { ...site, subscribe })
+
+  for (const page of ['check-your-inbox', 'confirmed', 'unsubscribed']) {
+    assert.match(readFileSync(join(outDir, 'subscribe', page, 'index.html'), 'utf-8'), /noindex/)
+  }
+})
+
+test('renderSubscribePages writes nothing for a site without a subscribe config', () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'subscribe-out-'))
+
+  renderSubscribePages(outDir, site)
+
+  assert.equal(existsSync(join(outDir, 'subscribe')), false)
 })

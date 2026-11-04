@@ -7,7 +7,12 @@
     "url": "https://innermonologue.nbaglivo.dev",
     "name": "The Open Inner Monologue",
     "author": "Nicolás Baglivo",
-    "description": "The open inner monologue of Nicolás Baglivo."
+    "description": "The open inner monologue of Nicolás Baglivo.",
+    "subscribe": {
+      "siteId": "inner-monologue",
+      "lang": "es",
+      "blogName": "The Open Inner Monologue"
+    }
   },
   "scripts": {
     "test": "node --test *.test.mjs",
