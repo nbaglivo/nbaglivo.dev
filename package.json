@@ -14,9 +14,11 @@
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.1",
-    "html-validate": "^11.8.0"
+    "html-validate": "^11.8.0",
+    "lefthook": "^2.2.2"
   },
   "allowScripts": {
-    "fsevents@2.3.3": true
+    "fsevents@2.3.3": true,
+    "lefthook@2.2.2": true
   }
 }
