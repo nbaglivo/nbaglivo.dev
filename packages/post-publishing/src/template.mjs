@@ -4,8 +4,15 @@ export const SUBSCRIBE_PAGES = ['check-your-inbox', 'confirmed', 'unsubscribed']
 
 const SUBSCRIBE_COPY = {
   en: {
+    follow: {
+      question: 'How do you want to receive my updates?',
+      fediverse: 'Fediverse',
+      copy: 'Copy',
+      copied: 'Copied',
+      rssHint: 'Paste this address into your RSS reader.',
+      fediverseHint: 'Paste this into Mastodon search or your app.',
+    },
     form: {
-      heading: 'Get new posts by email',
       placeholder: 'you@example.com',
       fieldLabel: 'Email address',
       button: 'Subscribe',
@@ -17,8 +24,15 @@ const SUBSCRIBE_COPY = {
     unsubscribed: { heading: "You're unsubscribed", body: "You won't get any more emails.", mistake: 'Was that a mistake?' },
   },
   es: {
+    follow: {
+      question: '¿Cómo querés recibir mis actualizaciones?',
+      fediverse: 'Fediverso',
+      copy: 'Copiar',
+      copied: 'Copiado',
+      rssHint: 'Pegá esta dirección en tu lector de RSS.',
+      fediverseHint: 'Pegá esto en el buscador de Mastodon o de tu app.',
+    },
     form: {
-      heading: 'Recibí los posts nuevos por email',
       placeholder: 'vos@ejemplo.com',
       fieldLabel: 'Tu email',
       button: 'Suscribirme',
@@ -59,6 +73,8 @@ function renderDocument({ lang, title, feedTitle, description, assetBase, fontWe
 `
 }
 
+const BUTTON_CLASSES = "cursor-pointer rounded border border-[#e3ddd0] bg-[#f1ece2] px-3 py-1.5 font-['IBM_Plex_Mono',monospace] text-[0.82rem] text-[#38352f] transition-colors hover:border-[#38352f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#38352f]"
+
 function renderSubscribeRow(content) {
   return `<div class="grid grid-cols-[56px_1fr] gap-4 items-start">
 				<span class="pt-1 font-['IBM_Plex_Mono',monospace] text-[0.78rem] text-[#756e60]" aria-hidden="true">email</span>
@@ -74,19 +90,60 @@ function renderSubscribeForm({ siteId, lang }, buttonLabel = SUBSCRIBE_COPY[lang
   return `<form class="mt-2 flex flex-wrap gap-2.5" method="post" action="${WARMHOLE_URL}/sites/${siteId}/subscribe">
 						<input class="min-w-40 flex-1 rounded border border-[#e3ddd0] bg-white px-2.5 py-1.5 font-['IBM_Plex_Mono',monospace] text-sm text-[#38352f] placeholder:text-[#8a857b] focus:outline-2 focus:outline-offset-1 focus:outline-[#38352f]" type="email" name="email" required placeholder="${placeholder}" autocomplete="email" aria-label="${fieldLabel}">
 						<input type="text" name="website" tabindex="-1" autocomplete="off" hidden>
-						<button class="cursor-pointer rounded border border-[#e3ddd0] bg-[#f1ece2] px-3 py-1.5 font-['IBM_Plex_Mono',monospace] text-[0.82rem] text-[#38352f] transition-colors hover:border-[#38352f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#38352f]" type="submit">${buttonLabel}</button>
+						<button class="${BUTTON_CLASSES}" type="submit">${buttonLabel}</button>
 					</form>`
 }
 
-function renderPostSignup(subscribe) {
-  const { heading } = SUBSCRIBE_COPY[subscribe.lang].form
+function renderCopyValue(value, hint, { copy, copied }) {
+  return `<div class="mt-2 flex flex-wrap gap-2.5">
+							<span class="min-w-0 grow basis-full rounded border border-[#e3ddd0] bg-white px-2.5 py-1.5 font-['IBM_Plex_Mono',monospace] text-[0.82rem] text-[#38352f] select-all [overflow-wrap:anywhere] sm:basis-0">${value}</span>
+							<button class="${BUTTON_CLASSES} min-w-[5.25rem]" type="button" data-copy="${value}" data-copied="${copied}" hidden>${copy}</button>
+						</div>
+						<p class="mt-1.5 text-[0.82rem] text-[#6f6a60]">${hint}</p>`
+}
 
-  return `
+function renderFollowOptions(subscribe) {
+  const copy = SUBSCRIBE_COPY[subscribe.lang].follow
+  const { handle, feedUrl } = subscribe
 
-			<section class="mt-12 border-t border-[#ebe6dc] pt-[1.375rem]" lang="${subscribe.lang}">
-			${renderSubscribeRow(`<h3 class="text-[#38352f]">${heading}</h3>
-					${renderSubscribeForm(subscribe)}`)}
-			</section>`
+  return `<fieldset class="relative grid min-w-0 grid-cols-[auto_auto_auto_1fr] justify-items-start gap-x-4">
+						<legend class="text-[#38352f]">${copy.question}</legend>
+						<input class="peer/rss sr-only" type="radio" name="follow" id="follow-rss">
+						<label class="mt-1 cursor-pointer border-b-2 border-dotted border-[#cfc7b8] text-[#38352f] transition-colors hover:border-[#38352f] peer-checked/rss:border-solid peer-checked/rss:border-[#38352f] peer-focus-visible/rss:outline-2 peer-focus-visible/rss:outline-offset-2 peer-focus-visible/rss:outline-[#38352f]" for="follow-rss">RSS</label>
+						<input class="peer/email sr-only" type="radio" name="follow" id="follow-email">
+						<label class="mt-1 cursor-pointer border-b-2 border-dotted border-[#cfc7b8] text-[#38352f] transition-colors hover:border-[#38352f] peer-checked/email:border-solid peer-checked/email:border-[#38352f] peer-focus-visible/email:outline-2 peer-focus-visible/email:outline-offset-2 peer-focus-visible/email:outline-[#38352f]" for="follow-email">Email</label>
+						<input class="peer/fediverse sr-only" type="radio" name="follow" id="follow-fediverse">
+						<label class="mt-1 cursor-pointer border-b-2 border-dotted border-[#cfc7b8] text-[#38352f] transition-colors hover:border-[#38352f] peer-checked/fediverse:border-solid peer-checked/fediverse:border-[#38352f] peer-focus-visible/fediverse:outline-2 peer-focus-visible/fediverse:outline-offset-2 peer-focus-visible/fediverse:outline-[#38352f]" for="follow-fediverse">${copy.fediverse}</label>
+						<div class="invisible col-span-4 col-start-1 row-start-2 w-full min-w-0 peer-checked/rss:visible" data-follow-panel>
+						${renderCopyValue(feedUrl, copy.rssHint, copy)}
+						</div>
+						<div class="invisible col-span-4 col-start-1 row-start-2 w-full min-w-0 peer-checked/email:visible" data-follow-panel>
+						${renderSubscribeForm(subscribe)}
+						</div>
+						<div class="invisible col-span-4 col-start-1 row-start-2 w-full min-w-0 peer-checked/fediverse:visible" data-follow-panel>
+						${renderCopyValue(handle, copy.fediverseHint, copy)}
+						</div>
+					</fieldset>
+					<script>
+						for (const button of document.querySelectorAll('[data-copy]')) {
+							if (!navigator.clipboard) continue
+							const label = button.textContent
+							button.hidden = false
+							button.addEventListener('click', async () => {
+								await navigator.clipboard.writeText(button.dataset.copy)
+								button.textContent = button.dataset.copied
+								setTimeout(() => {
+									button.textContent = label
+								}, 1200)
+							})
+						}
+					</script>`
+}
+
+export function renderFollowBox(subscribe) {
+  return `<section data-follow-box class="rounded-lg bg-[#f3eee4] px-5 py-4 [&_button]:bg-[#faf8f4]" lang="${subscribe.lang}">
+					${renderFollowOptions(subscribe)}
+				</section>`
 }
 
 const renderSubscribeHeading = (heading) => `<h1 class="text-xl tracking-tight text-[#38352f]">${heading}</h1>`
@@ -167,6 +224,6 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
 				<div class="prose prose-neutral max-w-none">
 					${content}
 				</div>
-			</article>${subscribe ? renderPostSignup(subscribe) : ''}`,
+			</article>${subscribe ? `\n\n\t\t\t<div class="mt-12">\n\t\t\t\t${renderFollowBox(subscribe)}\n\t\t\t</div>` : ''}`,
   })
 }

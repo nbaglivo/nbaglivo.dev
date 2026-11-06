@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { renderPage, renderSubscribePage } from './template.mjs'
+import { renderFollowBox, renderPage, renderSubscribePage } from './template.mjs'
 
 const site = { siteName: 'Nicolás Baglivo', author: 'Nicolás Baglivo' }
 
@@ -113,8 +113,20 @@ test('renderPage declares the charset as the first element in <head>', () => {
   assert.match(html, /<head>\s*<meta charset="UTF-8">/)
 })
 
-const engineering = { siteId: 'engineering', lang: 'en', blogName: 'Engineering ideas and projects' }
-const monologue = { siteId: 'inner-monologue', lang: 'es', blogName: 'The Open Inner Monologue' }
+const engineering = {
+  siteId: 'engineering',
+  lang: 'en',
+  blogName: 'Engineering ideas and projects',
+  handle: '@engineering@nbaglivo.dev',
+  feedUrl: 'https://engineering.nbaglivo.dev/feed.xml',
+}
+const monologue = {
+  siteId: 'inner-monologue',
+  lang: 'es',
+  blogName: 'The Open Inner Monologue',
+  handle: '@innermonologue@nbaglivo.dev',
+  feedUrl: 'https://innermonologue.nbaglivo.dev/feed.xml',
+}
 const post = { ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' }
 const subscribePage = (page, subscribe = engineering) => renderSubscribePage({ ...site, page, subscribe })
 
@@ -150,7 +162,7 @@ test('renderPage declares the button as a submit button', () => {
 test('renderPage marks the form language so a Spanish form reads correctly on an English post', () => {
   const html = renderPage({ ...post, lang: 'en', subscribe: monologue })
   assert.match(html, /<section [^>]*lang="es"/)
-  assert.match(html, /Recibí los posts nuevos por email/)
+  assert.match(html, /¿Cómo querés recibir mis actualizaciones\?/)
   assert.match(html, />Suscribirme<\/button>/)
 })
 
@@ -203,4 +215,95 @@ test('renderSubscribePage uses the reviewed Spanish copy', () => {
   assert.match(subscribePage('check-your-inbox', monologue), /Te mandé un link por email\. Abrilo para confirmar\./)
   assert.match(subscribePage('confirmed', monologue), /Los posts nuevos te van a llegar por email\./)
   assert.match(subscribePage('unsubscribed', monologue), />Suscribirme de nuevo<\/button>/)
+})
+
+test('renderPage asks how to receive updates as a labelled group of choices', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  assert.match(html, /<fieldset [^>]*>\s*<legend[^>]*>How do you want to receive my updates\?<\/legend>/)
+})
+
+test('renderPage offers RSS, Email and Fediverse in that order', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  const labels = [...html.matchAll(/<label [^>]*for="follow-[a-z]+"[^>]*>([^<]+)<\/label>/g)].map((match) => match[1])
+  assert.deepEqual(labels, ['RSS', 'Email', 'Fediverse'])
+})
+
+test('renderPage uses the Spanish name for the fediverse on a Spanish blog', () => {
+  assert.match(renderPage({ ...post, subscribe: monologue }), /for="follow-fediverse"[^>]*>Fediverso<\/label>/)
+})
+
+test('renderPage leaves every choice unselected so no option leads', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  assert.equal([...html.matchAll(/type="radio"/g)].length, 3)
+  assert.doesNotMatch(html, /\bchecked>/)
+})
+
+test('renderPage stacks the panels in one grid cell so switching never moves the page', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  const panels = [...html.matchAll(/<div class="([^"]*)" data-follow-panel>/g)].map((match) => match[1])
+  assert.equal(panels.length, 3)
+  for (const panel of panels) {
+    assert.match(panel, /\bcol-start-1\b/)
+    assert.match(panel, /\brow-start-2\b/)
+    assert.match(panel, /\binvisible\b/)
+  }
+})
+
+test('renderPage reveals each panel from its own choice using only CSS', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  for (const name of ['rss', 'email', 'fediverse']) {
+    assert.match(html, new RegExp(`<input class="peer/${name} [^"]*" type="radio"`))
+    assert.match(html, new RegExp(`<div class="[^"]*peer-checked/${name}:visible[^"]*" data-follow-panel>`))
+  }
+})
+
+test('renderPage shows the feed address and the fediverse handle with copy buttons', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  assert.match(html, />https:\/\/engineering\.nbaglivo\.dev\/feed\.xml<\/span>/)
+  assert.match(html, />@engineering@nbaglivo\.dev<\/span>/)
+  assert.match(html, /data-copy="https:\/\/engineering\.nbaglivo\.dev\/feed\.xml"/)
+  assert.match(html, /data-copy="@engineering@nbaglivo\.dev"/)
+})
+
+test('renderPage hides the copy buttons until JS can make them work', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  assert.equal([...html.matchAll(/<button [^>]*data-copy="[^"]*"[^>]*hidden/g)].length, 2)
+  assert.match(html, /<script>[\s\S]*querySelectorAll\('\[data-copy\]'\)[\s\S]*<\/script>/)
+})
+
+test('renderFollowBox has no margin label, keeping only the box in the blog language', () => {
+  for (const subscribe of [engineering, monologue]) {
+    const html = renderFollowBox(subscribe)
+    assert.match(html, new RegExp(`<section data-follow-box class="[^"]*" lang="${subscribe.lang}">`))
+    assert.doesNotMatch(html, /index-year/)
+    assert.doesNotMatch(html, />(follow|seguí)</)
+  }
+})
+
+test('renderFollowBox fills the content width with no side margins', () => {
+  assert.doesNotMatch(renderFollowBox(engineering).match(/<section [^>]*>/)[0], /\bmx-/)
+})
+
+test('renderPage highlights the follow options in a tinted box without a margin label', () => {
+  const html = renderPage({ ...post, subscribe: engineering })
+  assert.match(html, /<section data-follow-box class="[^"]*bg-\[#f3eee4\][^"]*" lang="en">/)
+  assert.doesNotMatch(html, />follow</)
+})
+
+test('the subscribe pages keep their email margin label', () => {
+  assert.match(subscribePage('confirmed'), /aria-hidden="true">email<\/span>/)
+})
+
+test('renderFollowBox posts to the site id with the site copy', () => {
+  const html = renderFollowBox(monologue)
+  assert.match(html, /¿Cómo querés recibir mis actualizaciones\?/)
+  assert.match(html, /action="https:\/\/ap\.nbaglivo\.dev\/sites\/inner-monologue\/subscribe"/)
+})
+
+test('the error and unsubscribed pages keep only the email form', () => {
+  for (const page of ['check-your-inbox', 'unsubscribed']) {
+    const html = subscribePage(page)
+    assert.doesNotMatch(html, /<fieldset/)
+    assert.match(html, /<form /)
+  }
 })
