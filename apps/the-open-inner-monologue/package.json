@@ -11,7 +11,8 @@
     "subscribe": {
       "siteId": "inner-monologue",
       "lang": "es",
-      "blogName": "The Open Inner Monologue"
+      "blogName": "The Open Inner Monologue",
+      "handle": "@innermonologue@nbaglivo.dev"
     }
   },
   "scripts": {

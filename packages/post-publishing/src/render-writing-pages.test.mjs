@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { existsSync, mkdtempSync, writeFileSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { renderSubscribePages, renderWritingPages } from './render-writing-pages.mjs'
+import { addIndexFollow, renderSubscribePages, renderWritingPages } from './render-writing-pages.mjs'
 
 const site = { siteName: 'Nicolás Baglivo', author: 'Nicolás Baglivo' }
 
@@ -162,7 +162,13 @@ test('renderWritingPages uses the lang frontmatter for the document language', (
   assert.match(html, /<html lang="es">/)
 })
 
-const subscribe = { siteId: 'engineering', lang: 'en', blogName: 'Engineering ideas and projects' }
+const subscribe = {
+  siteId: 'engineering',
+  lang: 'en',
+  blogName: 'Engineering ideas and projects',
+  handle: '@engineering@nbaglivo.dev',
+  feedUrl: 'https://engineering.nbaglivo.dev/feed.xml',
+}
 
 test('renderWritingPages adds the signup form when the site has a subscribe config', () => {
   const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
@@ -190,4 +196,31 @@ test('renderSubscribePages writes nothing for a site without a subscribe config'
   renderSubscribePages(outDir, site)
 
   assert.equal(existsSync(join(outDir, 'subscribe')), false)
+})
+
+test('addIndexFollow replaces the marker in the built home page with the form', () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'index-out-'))
+  writeFileSync(join(outDir, 'index.html'), '<main><!-- follow --></main>')
+
+  addIndexFollow(outDir, { subscribe })
+
+  const html = readFileSync(join(outDir, 'index.html'), 'utf-8')
+  assert.match(html, /sites\/engineering\/subscribe/)
+  assert.doesNotMatch(html, /<!-- follow -->/)
+})
+
+test('addIndexFollow fails the build when a subscribed site has no marker', () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'index-out-'))
+  writeFileSync(join(outDir, 'index.html'), '<main></main>')
+
+  assert.throws(() => addIndexFollow(outDir, { subscribe }), /<!-- follow -->/)
+})
+
+test('addIndexFollow leaves the home page alone for a site without a subscribe config', () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'index-out-'))
+  writeFileSync(join(outDir, 'index.html'), '<main></main>')
+
+  addIndexFollow(outDir, site)
+
+  assert.equal(readFileSync(join(outDir, 'index.html'), 'utf-8'), '<main></main>')
 })

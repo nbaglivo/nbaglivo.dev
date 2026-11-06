@@ -2,7 +2,9 @@ import { readdirSync, readFileSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import matter from 'gray-matter'
 import { renderMarkdown } from './markdown.mjs'
-import { renderPage, renderSubscribePage, SUBSCRIBE_PAGES } from './template.mjs'
+import { renderFollowBox, renderPage, renderSubscribePage, SUBSCRIBE_PAGES } from './template.mjs'
+
+const INDEX_FOLLOW_MARKER = '<!-- follow -->'
 
 export function renderWritingPages(sourceDir, outDir, { siteName, author, subscribe }) {
   mkdirSync(outDir, { recursive: true })
@@ -43,4 +45,17 @@ export function renderSubscribePages(outDir, { subscribe }) {
     mkdirSync(pageDir, { recursive: true })
     writeFileSync(join(pageDir, 'index.html'), renderSubscribePage({ page, subscribe }))
   }
+}
+
+export function addIndexFollow(outDir, { subscribe }) {
+  if (!subscribe) return
+
+  const indexPath = join(outDir, 'index.html')
+  const html = readFileSync(indexPath, 'utf-8')
+
+  if (!html.includes(INDEX_FOLLOW_MARKER)) {
+    throw new Error(`${indexPath}: missing ${INDEX_FOLLOW_MARKER} marker for the follow options`)
+  }
+
+  writeFileSync(indexPath, html.replace(INDEX_FOLLOW_MARKER, () => renderFollowBox(subscribe)))
 }

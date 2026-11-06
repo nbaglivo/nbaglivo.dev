@@ -11,7 +11,8 @@
     "subscribe": {
       "siteId": "engineering",
       "lang": "en",
-      "blogName": "Engineering ideas and projects"
+      "blogName": "Engineering ideas and projects",
+      "handle": "@engineering@nbaglivo.dev"
     }
   },
   "scripts": {
