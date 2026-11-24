@@ -8,7 +8,7 @@ import { buildSite } from '../src/build-site.mjs'
 const rootDir = process.cwd()
 const { positionals, values } = parseArgs({
   allowPositionals: true,
-  options: { port: { type: 'string', default: '8788' } },
+  options: { port: { type: 'string', default: '8788' }, out: { type: 'string' } },
 })
 const [command] = positionals
 
@@ -22,7 +22,7 @@ function readSiteConfig() {
 
 function build() {
   const site = readSiteConfig()
-  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, siteDescription: site.description, author: site.author, subscribe: site.subscribe, feedIdUrl: site.feedIdUrl, canonical: site.canonical })
+  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, siteDescription: site.description, author: site.author, subscribe: site.subscribe, feedIdUrl: site.feedIdUrl, canonical: site.canonical, outDir: values.out && resolve(values.out) })
 }
 
 function dev() {
@@ -38,7 +38,7 @@ function dev() {
 const commands = { build, dev }
 
 if (!commands[command]) {
-  console.error('Usage: post-publishing <build|dev> [--port <port>]')
+  console.error('Usage: post-publishing <build|dev> [--port <port>] [--out <dir>]')
   process.exit(1)
 }
 

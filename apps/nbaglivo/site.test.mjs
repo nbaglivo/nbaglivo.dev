@@ -1,7 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { readdirSync, readFileSync } from 'node:fs'
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { basename, join } from 'node:path'
 
 const read = (file) => readFileSync(join(import.meta.dirname, file), 'utf-8')
@@ -38,13 +39,17 @@ test('the index is the english work profile', () => {
   assert.doesNotMatch(index, /Selected work|canilla|innermonologue|lang="es"|gentedespierta/)
 })
 
-test('the built site keeps every feed id and points posts at their canonical address', () => {
-  execFileSync('npx', ['post-publishing', 'build'], { cwd: import.meta.dirname, stdio: 'pipe' })
+test('the built site keeps every feed id and points posts at their canonical address', (t) => {
+  const outDir = mkdtempSync(join(tmpdir(), 'nbaglivo-dist-'))
+  t.after(() => rmSync(outDir, { recursive: true, force: true }))
+  const built = (file) => readFileSync(join(outDir, file), 'utf-8')
 
-  const guids = [...read('dist/feed.xml').matchAll(/<guid isPermaLink="true">([^<]+)<\/guid>/g)].map((m) => m[1])
+  execFileSync('npx', ['post-publishing', 'build', '--out', outDir], { cwd: import.meta.dirname, stdio: 'pipe' })
+
+  const guids = [...built('feed.xml').matchAll(/<guid isPermaLink="true">([^<]+)<\/guid>/g)].map((m) => m[1])
   assert.deepEqual(guids.sort(), slugs.map((slug) => `https://engineering.nbaglivo.dev/writing/${slug}.html`).sort())
   for (const slug of slugs) {
-    assert.ok(read(`dist/writing/${slug}.html`).includes(`<link rel="canonical" href="https://nbaglivo.dev/writing/${slug}">`), slug)
+    assert.ok(built(`writing/${slug}.html`).includes(`<link rel="canonical" href="https://nbaglivo.dev/writing/${slug}">`), slug)
   }
 })
 
