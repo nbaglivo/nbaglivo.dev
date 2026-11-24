@@ -42,7 +42,9 @@ nico.gentedespierta.at and are not part of this.
 English, in this order: name and "Software engineer, Barcelona"; GitHub,
 Bluesky, LinkedIn and CV links; intro with the email address; selected work;
 writing by year; follow box. The sovereignty paragraph, the canilla, the
-Inner Monologue link and the Spanish footer go. Copy as approved in chat:
+Inner Monologue link and the Spanish footer go. Copy as first approved in chat (on
+2026-11-24 Nico replaced both paragraphs, email included, with "building products
+for 15+ years,"):
 
 > I've been building products for 15+ years, mostly distributed systems, and led
 > teams for four of them. Now I build with coding agents and engineer how they

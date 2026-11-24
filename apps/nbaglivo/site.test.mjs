@@ -34,7 +34,6 @@ test('the index is the english work profile', () => {
   assert.match(index, /<html lang="en">/)
   assert.match(index, /<link rel="canonical" href="https:\/\/nbaglivo\.dev\/">/)
   assert.match(index, /<h1 class="index-title">Nicolás Baglivo<\/h1>/)
-  assert.match(index, /mailto:hi@nbaglivo\.dev/)
   assert.match(index, /<h2[^>]*>Writing<\/h2>/)
   assert.doesNotMatch(index, /Selected work|canilla|innermonologue|lang="es"|gentedespierta/)
 })
