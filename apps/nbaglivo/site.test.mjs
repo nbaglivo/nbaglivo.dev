@@ -27,3 +27,12 @@ test('the index lists every post exactly once', () => {
   assert.ok(slugs.length > 0)
   assert.deepEqual(listed.sort(), slugs.sort())
 })
+
+test('the index is the english work profile', () => {
+  assert.match(index, /<html lang="en">/)
+  assert.match(index, /<link rel="canonical" href="https:\/\/nbaglivo\.dev\/">/)
+  assert.match(index, /<h1 class="index-title">Nicolás Baglivo<\/h1>/)
+  assert.match(index, /mailto:hi@nbaglivo\.dev/)
+  for (const heading of ['Selected work', 'Writing']) assert.match(index, new RegExp(`<h2[^>]*>${heading}</h2>`))
+  assert.doesNotMatch(index, /canilla|innermonologue|lang="es"|gentedespierta/)
+})
