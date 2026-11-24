@@ -51,7 +51,8 @@ Inner Monologue link and the Spanish footer go. Copy as approved in chat:
 > If you're hiring, or want to talk about any of this, write to me at
 > hi@nbaglivo.dev.
 
-Selected work:
+Selected work (removed from the page for now at Nico's request, 2026-11-24; kept
+here as the approved copy):
 
 - **Guardrails and verification for coding agents.** Factorial, 2026. Helping
   engineers move upstream to decisions while agents implement and verify,

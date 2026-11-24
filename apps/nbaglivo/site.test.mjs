@@ -34,8 +34,8 @@ test('the index is the english work profile', () => {
   assert.match(index, /<link rel="canonical" href="https:\/\/nbaglivo\.dev\/">/)
   assert.match(index, /<h1 class="index-title">Nicolás Baglivo<\/h1>/)
   assert.match(index, /mailto:hi@nbaglivo\.dev/)
-  for (const heading of ['Selected work', 'Writing']) assert.match(index, new RegExp(`<h2[^>]*>${heading}</h2>`))
-  assert.doesNotMatch(index, /canilla|innermonologue|lang="es"|gentedespierta/)
+  assert.match(index, /<h2[^>]*>Writing<\/h2>/)
+  assert.doesNotMatch(index, /Selected work|canilla|innermonologue|lang="es"|gentedespierta/)
 })
 
 test('the built site keeps every feed id and points posts at their canonical address', () => {
