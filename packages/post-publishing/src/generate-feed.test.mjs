@@ -12,11 +12,11 @@ const site = {
   author: 'Nicolás Baglivo',
 }
 
-function buildFeed(posts) {
+function buildFeed(posts, overrides = {}) {
   const sourceDir = mkdtempSync(join(tmpdir(), 'feed-src-'))
   const outDir = mkdtempSync(join(tmpdir(), 'feed-out-'))
   for (const [file, raw] of Object.entries(posts)) writeFileSync(join(sourceDir, file), raw)
-  generateFeed(sourceDir, outDir, site)
+  generateFeed(sourceDir, outDir, { ...site, ...overrides })
   return readFileSync(join(outDir, 'feed.xml'), 'utf-8')
 }
 
@@ -60,4 +60,11 @@ test('generateFeed resolves relative image sources in post content against the p
   })
 
   assert.match(xml, /<img src="https:\/\/nbaglivo\.dev\/public\/images\/images\/phone\.png" alt="A phone"/)
+})
+
+test('generateFeed keeps guids on feedIdUrl while links use the site URL', () => {
+  const xml = buildFeed({ 'a.md': '---\ntitle: "A"\ndate: "Jan 1, 2026"\n---\n\nA.\n' }, { feedIdUrl: 'https://engineering.nbaglivo.dev' })
+
+  assert.match(xml, /<link>https:\/\/nbaglivo\.dev\/writing\/a\.html<\/link>/)
+  assert.match(xml, /<guid isPermaLink="true">https:\/\/engineering\.nbaglivo\.dev\/writing\/a\.html<\/guid>/)
 })

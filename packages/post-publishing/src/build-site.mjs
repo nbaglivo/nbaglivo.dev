@@ -6,7 +6,7 @@ import { addIndexFollow, renderSubscribePages, renderWritingPages } from './rend
 import { generateSitemap } from './generate-sitemap.mjs'
 import { generateFeed } from './generate-feed.mjs'
 
-export function buildSite({ rootDir, siteUrl, siteName, siteDescription, author, subscribe }) {
+export function buildSite({ rootDir, siteUrl, siteName, siteDescription, author, subscribe, feedIdUrl }) {
   const outDir = join(rootDir, 'dist')
   const subscribeOptions = subscribe && { ...subscribe, feedUrl: `${siteUrl}/feed.xml` }
   const sourceDir = join(rootDir, 'writing-md')
@@ -20,7 +20,7 @@ export function buildSite({ rootDir, siteUrl, siteName, siteDescription, author,
   copyStaticFiles(rootDir, outDir)
   if (existsSync(sourceDir)) {
     renderWritingPages(sourceDir, join(outDir, 'writing'), { siteName, author, subscribe: subscribeOptions })
-    generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author })
+    generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author, feedIdUrl })
   }
   renderSubscribePages(outDir, { subscribe: subscribeOptions })
   addIndexFollow(outDir, { subscribe: subscribeOptions })

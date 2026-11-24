@@ -19,27 +19,29 @@ function toDate(dateStr) {
   return new Date(`${dateStr} UTC`)
 }
 
-function itemEntry({ title, link, pubDate, description, content }) {
+function itemEntry({ title, link, guid, pubDate, description, content }) {
   const descriptionXml = description ? `\n      <description>${escapeXml(description)}</description>` : ''
   return `    <item>
       <title>${escapeXml(title)}</title>
       <link>${link}</link>
-      <guid isPermaLink="true">${link}</guid>
+      <guid isPermaLink="true">${guid}</guid>
       <pubDate>${pubDate.toUTCString()}</pubDate>${descriptionXml}
       <content:encoded>${cdata(content)}</content:encoded>
     </item>`
 }
 
-export function generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author }) {
+export function generateFeed(sourceDir, outDir, { siteUrl, siteName, siteDescription, author, feedIdUrl = siteUrl }) {
   const files = readdirSync(sourceDir).filter((file) => file.endsWith('.md'))
 
   const posts = files
     .map((file) => {
       const { data, content } = matter(readFileSync(join(sourceDir, file), 'utf-8'))
-      const link = `${siteUrl}/writing/${basename(file, '.md')}.html`
+      const path = `/writing/${basename(file, '.md')}.html`
+      const link = `${siteUrl}${path}`
       return {
         title: data.title,
         link,
+        guid: `${feedIdUrl}${path}`,
         pubDate: toDate(data.date),
         description: data.subtitle,
         content: renderMarkdown(content, { baseUrl: link }),
