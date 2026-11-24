@@ -108,6 +108,12 @@ test('renderPage uses the given lang for the document language', () => {
   assert.match(html, /<html lang="es">/)
 })
 
+test('renderPage links the canonical URL only when one is given', () => {
+  const page = { ...site, title: 'T', date: 'Jan 1, 2026', content: '<p>x</p>' }
+  assert.match(renderPage({ ...page, canonicalUrl: 'https://nbaglivo.dev/writing/t' }), /<link rel="canonical" href="https:\/\/nbaglivo\.dev\/writing\/t">/)
+  assert.doesNotMatch(renderPage(page), /canonical/)
+})
+
 test('renderPage declares the charset as the first element in <head>', () => {
   const html = renderPage({ ...site, title: 'T', subtitle: undefined, date: 'Jan 1, 2026', content: '<p>x</p>' })
   assert.match(html, /<head>\s*<meta charset="UTF-8">/)

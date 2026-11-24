@@ -22,7 +22,7 @@ function readSiteConfig() {
 
 function build() {
   const site = readSiteConfig()
-  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, siteDescription: site.description, author: site.author, subscribe: site.subscribe, feedIdUrl: site.feedIdUrl })
+  buildSite({ rootDir, siteUrl: site.url, siteName: site.name, siteDescription: site.description, author: site.author, subscribe: site.subscribe, feedIdUrl: site.feedIdUrl, canonical: site.canonical })
 }
 
 function dev() {

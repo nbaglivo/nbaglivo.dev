@@ -45,11 +45,12 @@ const SUBSCRIBE_COPY = {
   },
 }
 
-function renderDocument({ lang, title, feedTitle, description, assetBase, fontWeights, robots, body }) {
+function renderDocument({ lang, title, feedTitle, description, assetBase, fontWeights, robots, canonicalUrl, body }) {
   const preloads = fontWeights
     .map((weight) => `<link rel="preload" href="${assetBase}public/fonts/ibm-plex-sans/ibm-plex-sans-latin-${weight}-normal.woff2" as="font" type="font/woff2" crossorigin>`)
     .join('\n\t\t')
   const robotsTag = robots ? `<meta name="robots" content="${robots}">\n\t\t` : ''
+  const canonicalTag = canonicalUrl ? `<link rel="canonical" href="${canonicalUrl}">\n\t\t` : ''
 
   return `<!DOCTYPE html>
 <html lang="${lang}">
@@ -57,7 +58,7 @@ function renderDocument({ lang, title, feedTitle, description, assetBase, fontWe
 		<meta charset="UTF-8">
 		<title>${title}</title>
 		<meta name="description" content="${description.replace(/"/g, '&quot;')}">
-		${robotsTag}<link rel="icon" type="image/svg+xml" href="${assetBase}public/icons/favicon.svg">
+		${robotsTag}${canonicalTag}<link rel="icon" type="image/svg+xml" href="${assetBase}public/icons/favicon.svg">
 		${preloads}
 		<link rel="stylesheet" href="${assetBase}style.css">
 		<link rel="alternate" type="application/rss+xml" title="${feedTitle}" href="${assetBase}feed.xml">
@@ -203,7 +204,7 @@ export function renderSubscribePage({ page, subscribe }) {
   })
 }
 
-export function renderPage({ title, subtitle, date, content, pageTitle, description, siteName, author, lang = 'en', subscribe }) {
+export function renderPage({ title, subtitle, date, content, pageTitle, description, siteName, author, lang = 'en', subscribe, canonicalUrl }) {
   const subtitleHtml = subtitle ? `<p class="text-[#6f6a60] mt-1">${subtitle}</p>\n\t\t\t\t` : ''
   const resolvedPageTitle = pageTitle ?? title
   const resolvedDescription = description ?? `${title} — notes by ${author}.`
@@ -215,6 +216,7 @@ export function renderPage({ title, subtitle, date, content, pageTitle, descript
     description: resolvedDescription,
     assetBase: '../',
     fontWeights: [400, 500],
+    canonicalUrl,
     body: `<a class="inline-block text-sm text-[#8a857b] border-b-2 border-dotted border-[#cfc7b8] transition-colors hover:border-[#38352f]" href="../index.html">← Back</a>
 
 			<article class="mt-6">

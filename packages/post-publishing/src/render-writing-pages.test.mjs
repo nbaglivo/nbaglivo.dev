@@ -162,6 +162,16 @@ test('renderWritingPages uses the lang frontmatter for the document language', (
   assert.match(html, /<html lang="es">/)
 })
 
+test('renderWritingPages points each post at its canonical URL without .html', () => {
+  const sourceDir = mkdtempSync(join(tmpdir(), 'writing-src-'))
+  const outDir = join(mkdtempSync(join(tmpdir(), 'writing-out-')), 'writing')
+  writeFileSync(join(sourceDir, 'my-post.md'), '---\ntitle: "My Post"\ndate: "Jan 1, 2026"\n---\n\nHello.\n')
+
+  renderWritingPages(sourceDir, outDir, { ...site, canonicalUrl: 'https://nbaglivo.dev' })
+
+  assert.match(readFileSync(join(outDir, 'my-post.html'), 'utf-8'), /<link rel="canonical" href="https:\/\/nbaglivo\.dev\/writing\/my-post">/)
+})
+
 const subscribe = {
   siteId: 'engineering',
   lang: 'en',

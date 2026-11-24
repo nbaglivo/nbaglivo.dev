@@ -6,7 +6,7 @@ import { renderFollowBox, renderPage, renderSubscribePage, SUBSCRIBE_PAGES } fro
 
 const INDEX_FOLLOW_MARKER = '<!-- follow -->'
 
-export function renderWritingPages(sourceDir, outDir, { siteName, author, subscribe }) {
+export function renderWritingPages(sourceDir, outDir, { siteName, author, subscribe, canonicalUrl }) {
   mkdirSync(outDir, { recursive: true })
 
   const files = readdirSync(sourceDir).filter((file) => file.endsWith('.md'))
@@ -19,6 +19,7 @@ export function renderWritingPages(sourceDir, outDir, { siteName, author, subscr
       throw new Error(`${file}: missing required frontmatter "title" and/or "date"`)
     }
 
+    const slug = basename(file, '.md')
     const html = renderPage({
       title: data.title,
       subtitle: data.subtitle,
@@ -30,9 +31,9 @@ export function renderWritingPages(sourceDir, outDir, { siteName, author, subscr
       author,
       lang: data.lang,
       subscribe,
+      canonicalUrl: canonicalUrl && `${canonicalUrl}/writing/${slug}`,
     })
 
-    const slug = basename(file, '.md')
     writeFileSync(join(outDir, `${slug}.html`), html)
   }
 }
