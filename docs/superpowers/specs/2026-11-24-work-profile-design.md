@@ -74,8 +74,9 @@ Selected work:
   `gray-matter`. Site URL stays `https://nbaglivo.dev`. The feed keeps
   engineering's description.
 - `_redirects` loses `/writing/*` and `/feed.xml`, and keeps the webfinger line.
-- The CI matrix keeps both Cloudflare projects. The `engineering-nbaglivo` entry
-  builds `nbaglivo` and keeps its spread-the-word notification and token.
+- CI keeps both Cloudflare projects. One job tests and builds `nbaglivo`, deploys
+  `nbaglivo-dev`, then `engineering-nbaglivo`, then notifies spread-the-word with
+  engineering's token, so no post is announced before its page is live.
 - Post pages keep their layout; "← Back" lands on the profile.
 
 ## Feed and addresses (decided)
@@ -96,7 +97,7 @@ Selected work:
 - The CV has Factorial in the past tense, so the page states no current job.
 - The follow box shows the nbaglivo.dev feed address to new subscribers; the old
   feed address keeps working.
-- Both deploys run in parallel in CI, so the addresses can differ for a minute.
+- The two deploys run one after the other, so the addresses can differ briefly.
 - Production spread-the-word config was not read. The design assumes its
   engineering entry uses engineering.nbaglivo.dev for feed and subscribe pages;
   both keep working.
