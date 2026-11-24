@@ -16,7 +16,7 @@ jobs:
         include:
           - app: nbaglivo
             project: nbaglivo-dev
-          - app: engineering
+          - app: nbaglivo
             project: engineering-nbaglivo
             warmhole_site: engineering
             warmhole_token_secret: WARMHOLE_ENGINEERING_SYNC_TOKEN

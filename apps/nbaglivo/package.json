@@ -7,9 +7,18 @@
     "url": "https://nbaglivo.dev",
     "name": "Nicolás Baglivo",
     "author": "Nicolás Baglivo",
-    "description": "About Nicolás Baglivo."
+    "description": "Engineering ideas and projects by Nicolás Baglivo.",
+    "feedIdUrl": "https://engineering.nbaglivo.dev",
+    "canonical": true,
+    "subscribe": {
+      "siteId": "engineering",
+      "lang": "en",
+      "blogName": "Engineering ideas and projects",
+      "handle": "@engineering@nbaglivo.dev"
+    }
   },
   "scripts": {
+    "test": "node --test *.test.mjs",
     "build": "post-publishing build",
     "dev": "post-publishing dev",
     "deploy": "npx wrangler pages deploy dist --project-name=nbaglivo-dev"
@@ -20,6 +29,7 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
+    "gray-matter": "^4.0.3",
     "tailwindcss": "^4.3.3"
   }
 }
